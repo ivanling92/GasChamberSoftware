@@ -378,6 +378,7 @@
             // saveButt
             // 
             this.saveButt.Enabled = false;
+            this.saveButt.ForeColor = System.Drawing.Color.SeaGreen;
             this.saveButt.Location = new System.Drawing.Point(340, 342);
             this.saveButt.Name = "saveButt";
             this.saveButt.Size = new System.Drawing.Size(77, 23);
@@ -389,6 +390,7 @@
             // clearButt
             // 
             this.clearButt.Enabled = false;
+            this.clearButt.ForeColor = System.Drawing.Color.DarkRed;
             this.clearButt.Location = new System.Drawing.Point(423, 342);
             this.clearButt.Name = "clearButt";
             this.clearButt.Size = new System.Drawing.Size(77, 23);

@@ -54,11 +54,11 @@ namespace GasChamberSoftware
                 humidBox.Text = outputs[2];
                 if (LED_ON)
                 {
-                    ledBox.Text = "ON";
+                    ledBox.Text = "1";
                 }
                 else
                 {
-                    ledBox.Text = "OFF";
+                    ledBox.Text = "0";
                 }
                 resistBox.Text = smu_output;
                 smuDone = false;
@@ -174,9 +174,20 @@ namespace GasChamberSoftware
 
         private void button2_Click(object sender, EventArgs e)
         {
-            logCount = 0;
-            logFile.Clear();
-            memCount.Text = "0";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result;
+
+            // Displays the MessageBox.
+
+            result = MessageBox.Show("This operation cannot be undone. Confirm delete?", "Delete logs", buttons);
+
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
+                logCount = 0;
+                logFile.Clear();
+                memCount.Text = "0";
+            }
+
         }
 
         private void button1_Click(object sender, EventArgs e)
