@@ -1,0 +1,9 @@
+,Pressure,Temperature,Humidity,LEDStatus,Resistance,Vstart,Vend,Vint
+Pressure,1,,,,,,,
+Temperature,0.956792753,1,,,,,,
+Humidity,0.944684992,0.924540035,1,,,,,
+LEDStatus,-0.137263986,-0.14136032,-0.110219972,1,,,,
+Resistance,-0.94553742,-0.966069491,-0.977028201,0.035723705,1,,,
+Vstart,#DIV/0!,#DIV/0!,#DIV/0!,#DIV/0!,#DIV/0!,1,,
+Vend,#DIV/0!,#DIV/0!,#DIV/0!,#DIV/0!,#DIV/0!,#DIV/0!,1,
+Vint,#DIV/0!,#DIV/0!,#DIV/0!,#DIV/0!,#DIV/0!,#DIV/0!,#DIV/0!,1
