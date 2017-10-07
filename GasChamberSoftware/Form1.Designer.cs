@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.serialPort_nano = new System.IO.Ports.SerialPort(this.components);
             this.serialPort_smu = new System.IO.Ports.SerialPort(this.components);
             this.label1 = new System.Windows.Forms.Label();
@@ -68,6 +68,7 @@
             this.clearButt = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.stopButt = new System.Windows.Forms.Button();
+            this.realTime = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.ivChart)).BeginInit();
             this.SuspendLayout();
             // 
@@ -313,18 +314,18 @@
             // 
             // ivChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.ivChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.ivChart.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.ivChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.ivChart.Legends.Add(legend2);
             this.ivChart.Location = new System.Drawing.Point(25, 182);
             this.ivChart.Name = "ivChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.IsVisibleInLegend = false;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.ivChart.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.IsVisibleInLegend = false;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.ivChart.Series.Add(series2);
             this.ivChart.Size = new System.Drawing.Size(300, 216);
             this.ivChart.TabIndex = 24;
             this.ivChart.Text = "chart1";
@@ -410,11 +411,23 @@
             this.stopButt.UseVisualStyleBackColor = true;
             this.stopButt.Click += new System.EventHandler(this.stopButt_Click);
             // 
+            // realTime
+            // 
+            this.realTime.AutoSize = true;
+            this.realTime.Location = new System.Drawing.Point(235, 158);
+            this.realTime.Name = "realTime";
+            this.realTime.Size = new System.Drawing.Size(74, 17);
+            this.realTime.TabIndex = 33;
+            this.realTime.Text = "Real Time";
+            this.realTime.UseVisualStyleBackColor = true;
+            this.realTime.CheckedChanged += new System.EventHandler(this.realTime_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(611, 415);
+            this.Controls.Add(this.realTime);
             this.Controls.Add(this.stopButt);
             this.Controls.Add(this.clearButt);
             this.Controls.Add(this.saveButt);
@@ -494,6 +507,7 @@
         private System.Windows.Forms.Button clearButt;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button stopButt;
+        private System.Windows.Forms.CheckBox realTime;
     }
 }
 

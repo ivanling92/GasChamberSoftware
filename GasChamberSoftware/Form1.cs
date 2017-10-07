@@ -32,7 +32,50 @@ namespace GasChamberSoftware
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
-            updateDisplay();
+            if(realTime.Checked)
+            {
+                displayNoLog();
+            }
+            else
+            {
+                updateDisplay();
+            }
+        }
+
+        private void displayNoLog()
+        {
+            string[] outputs = new string[] { }; ;
+            if (smuDone && nanoDone)
+            {
+                try
+                {
+                    outputs = nano_output.Split(',');
+                }
+                catch (Exception err)
+                {
+                    nano_output = "0,0,0,0";
+                    outputs = nano_output.Split(',');
+                }
+                pressureBox.Text = outputs[0];
+                tempBox.Text = outputs[1];
+                humidBox.Text = outputs[2];
+                if (LED_ON)
+                {
+                    ledBox.Text = "1";
+                }
+                else
+                {
+                    ledBox.Text = "0";
+                }
+                resistBox.Text = smu_output;
+                smuDone = false;
+                nanoDone = false;
+                readAllButt.Enabled = true;
+                updateChart(iv_curve);
+                object sender = null;
+                EventArgs e = null;
+                readAll_click(sender, e);
+            }
         }
 
         private void updateDisplay()
@@ -110,6 +153,7 @@ namespace GasChamberSoftware
             serialPort_nano.Open();
             LEDswitch.Enabled = true;
             smu_connect.Enabled = true;
+            nano_connect.Enabled = false;
         }
 
         private void smu_connect_Click(object sender, EventArgs e)
@@ -117,13 +161,21 @@ namespace GasChamberSoftware
             serialPort_smu.Open();
             readAllButt.Enabled = true;
             autoRead.Enabled = true;
+            smu_connect.Enabled = false;
         }
 
         private void serialPort_smu_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
-            iv_curve = serialPort_smu.ReadLine();
-            smu_output = serialPort_smu.ReadLine();
-            smuDone = true;
+            try
+            {
+                iv_curve = serialPort_smu.ReadLine();
+                smu_output = serialPort_smu.ReadLine();
+                smuDone = true;
+            }
+            catch
+            { }
+
+            
         }
 
         private void serialPort_nano_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -213,6 +265,23 @@ namespace GasChamberSoftware
         private void stopButt_Click(object sender, EventArgs e)
         {
             autoCount.Text = "0";
+            realTime.Checked = false;
+        }
+
+        private void realTime_CheckedChanged(object sender, EventArgs e)
+        {
+            if(realTime.Checked)
+            {
+                stopButt.Enabled = true;
+                autoRead.Enabled = false;
+                readAll_click(sender, e);
+            }
+            else
+            {
+                stopButt.Enabled = false;
+                autoRead.Enabled = true;
+            }
+
         }
     }
 }
