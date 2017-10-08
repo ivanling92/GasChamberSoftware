@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.keithley.tspdt.launching.TspLaunchConfiguration">
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+</listAttribute>
+<booleanAttribute key="tsp_attr_auto_run" value="false"/>
+<listAttribute key="tsp_attr_files_list">
+<listEntry value="main.tsp"/>
+</listAttribute>
+<booleanAttribute key="tsp_attr_generate_debug_file" value="false"/>
+<stringAttribute key="tsp_attr_project_name" value="KE2602Demo_ASimpleTest"/>
+<booleanAttribute key="tsp_attr_run_action_load" value="false"/>
+<booleanAttribute key="tsp_attr_run_action_load_execute" value="true"/>
+<booleanAttribute key="tsp_attr_storage_non_volatile" value="false"/>
+<booleanAttribute key="tsp_attr_storage_volatile" value="true"/>
+</launchConfiguration>

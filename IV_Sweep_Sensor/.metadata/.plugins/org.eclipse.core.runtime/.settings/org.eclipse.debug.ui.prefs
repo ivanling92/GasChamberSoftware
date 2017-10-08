@@ -1,0 +1,8 @@
+#Sun Oct 08 13:57:49 BST 2017
+Variables.detail.orientation_HasBeenSetInitiallyToNonDefault=true
+pref_state_memento.org.eclipse.debug.ui.BreakpointView=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<VariablesViewMemento>\r\n<breakpointOrganizers value\="org.eclipse.debug.ui.breakpointProjectOrganizer"/>\r\n</VariablesViewMemento>
+eclipse.preferences.version=1
+pref_state_memento.org.eclipse.debug.ui.BreakpointView_BreakpointOrganizersHasBeenSetInitiallyToNonDefault=true
+preferredTargets=default\:default|
+org.eclipse.debug.ui.PREF_LAUNCH_PERSPECTIVES=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<launchPerspectives/>\r\n
+Variables.detail.orientation=Variables.detail.orientation.hidden

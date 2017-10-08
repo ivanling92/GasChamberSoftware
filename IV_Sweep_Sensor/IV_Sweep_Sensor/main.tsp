@@ -1,3 +1,4 @@
+r_ave = 0
 function start(vstart,vend,vint)	
 	--beeper.beep(1,1503)
 	smua.reset()
