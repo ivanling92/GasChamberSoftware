@@ -32,7 +32,7 @@ namespace GasChamberSoftware
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
-            if(realTime.Checked)
+            if(realTime.Checked && !recordBox.Checked)
             {
                 displayNoLog();
             }
@@ -40,6 +40,10 @@ namespace GasChamberSoftware
             {
                 updateDisplay();
             }
+            pressureChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_pressure.Checked;
+            resistanceChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_resistance.Checked;
+            temperatureChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_temp.Checked;
+            humidityChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_humidity.Checked;
         }
 
         private void displayNoLog()
@@ -71,7 +75,8 @@ namespace GasChamberSoftware
                 smuDone = false;
                 nanoDone = false;
                 readAllButt.Enabled = true;
-                updateChart(iv_curve);
+                DateTime curDT = DateTime.Now;
+                updateChart(iv_curve, pressureBox.Text, tempBox.Text, humidBox.Text, resistBox.Text, curDT.ToLongTimeString());
                 object sender = null;
                 EventArgs e = null;
                 readAll_click(sender, e);
@@ -107,26 +112,32 @@ namespace GasChamberSoftware
                 smuDone = false;
                 nanoDone = false;
                 readAllButt.Enabled = true;
-                updateChart(iv_curve);
-                if(autoRead.Enabled == false && Convert.ToInt16(autoCount.Text)>0)
+                if(autoRead.Enabled == false && Convert.ToInt16(autoCount.Text)>0 && !recordBox.Checked)
                 {
                     autoCount.Text = (Convert.ToInt16(autoCount.Text) - 1).ToString();
                     object sender = null;
                     EventArgs e = null;
                     readAll_click(sender,e);
                 }
+                else if(recordBox.Checked)
+                {
+                    object sender = null;
+                    EventArgs e = null;
+                    readAll_click(sender, e);
+                }
                 else
                 {
                     autoRead.Enabled = true;
                 }
                 DateTime curDT = DateTime.Now;
+                updateChart(iv_curve, pressureBox.Text, tempBox.Text, humidBox.Text, resistBox.Text, curDT.ToLongTimeString());
                 logFile.Add(curDT.ToString()+","+pressureBox.Text + "," + tempBox.Text + "," + humidBox.Text + "," + ledBox.Text + "," + resistBox.Text + "," + startVolt.Text + "," + endVolt.Text + "," + intVolt.Text);
                 logCount++;
                 memCount.Text = logCount.ToString();
             }
         }
 
-        private void updateChart(string iv_curve)
+        private void updateChart(string iv_curve, string pressure, string temperature, string humidity, string resistance, string datetime)
         {
             string[] ivPoints = iv_curve.Split(';');
             ivChart.Series["Series1"].Points.Clear();
@@ -143,9 +154,66 @@ namespace GasChamberSoftware
                 }
                 catch(Exception err)
                 {
-
+                    Console.WriteLine(err.Message);
                 }
             }
+            try
+            {
+                pressureChart.ChartAreas[0].AxisY.Title = "Pressure (hPa)";
+                pressureChart.Series["Series1"].Points.AddXY(datetime, pressure);
+                temperatureChart.ChartAreas[0].AxisY.Title = "Temperature (c)";
+                temperatureChart.Series["Series1"].Points.AddXY(datetime, temperature);
+                humidityChart.ChartAreas[0].AxisY.Title = "Humidity (%RH)";
+                humidityChart.Series["Series1"].Points.AddXY(datetime, humidity);
+                resistanceChart.ChartAreas[0].AxisY.Title = "Resistance (Ohm)";
+                resistanceChart.Series["Series1"].Points.AddXY(datetime, resistance);
+                if(scroll_pressure.Checked)
+                {
+                    pressureChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                    pressureChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
+                    pressureChart.ChartAreas[0].AxisX.ScaleView.Size = 100;
+                    if (pressureChart.ChartAreas[0].AxisX.Maximum > pressureChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    {
+                        pressureChart.ChartAreas[0].AxisX.ScaleView.Scroll(pressureChart.ChartAreas[0].AxisX.Maximum);
+                    }       
+                }
+
+                if (scroll_resist.Checked)
+                {
+                    resistanceChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                    resistanceChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
+                    resistanceChart.ChartAreas[0].AxisX.ScaleView.Size = 100;
+                    if (resistanceChart.ChartAreas[0].AxisX.Maximum > resistanceChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    {
+                        resistanceChart.ChartAreas[0].AxisX.ScaleView.Scroll(resistanceChart.ChartAreas[0].AxisX.Maximum);
+                    }
+                }
+
+                if (scroll_temp.Checked)
+                {
+                    temperatureChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                    temperatureChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
+                    temperatureChart.ChartAreas[0].AxisX.ScaleView.Size = 100;
+                    if (temperatureChart.ChartAreas[0].AxisX.Maximum > temperatureChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    {
+                        temperatureChart.ChartAreas[0].AxisX.ScaleView.Scroll(temperatureChart.ChartAreas[0].AxisX.Maximum);
+                    }
+                }
+
+                if (scroll_humid.Checked)
+                {
+                    humidityChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                    humidityChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
+                    humidityChart.ChartAreas[0].AxisX.ScaleView.Size = 100;
+                    if (humidityChart.ChartAreas[0].AxisX.Maximum > humidityChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    {
+                        humidityChart.ChartAreas[0].AxisX.ScaleView.Scroll(humidityChart.ChartAreas[0].AxisX.Maximum);
+                    }
+                }
+
+
+            }
+            catch { }
         }
 
         private void nano_connect_Click(object sender, EventArgs e)
@@ -162,6 +230,9 @@ namespace GasChamberSoftware
             readAllButt.Enabled = true;
             autoRead.Enabled = true;
             smu_connect.Enabled = false;
+            realTime.Enabled = true;
+            realTime.Checked = true;
+            recordBox.Enabled = true;
         }
 
         private void serialPort_smu_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
@@ -282,6 +353,80 @@ namespace GasChamberSoftware
                 autoRead.Enabled = true;
             }
 
+        }
+
+        private void ResetChart_Click(object sender, EventArgs e)
+        {
+            ivChart.Series["Series1"].Points.Clear();
+            pressureChart.Series["Series1"].Points.Clear();
+            temperatureChart.Series["Series1"].Points.Clear();
+            humidityChart.Series["Series1"].Points.Clear();
+            resistanceChart.Series["Series1"].Points.Clear();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            pressureChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_pressure.Checked;
+        }
+
+        private void fz_temp_CheckedChanged(object sender, EventArgs e)
+        {
+            temperatureChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_temp.Checked;
+        }
+
+        private void fz_humidity_CheckedChanged(object sender, EventArgs e)
+        {
+            humidityChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_humidity.Checked;
+        }
+
+        private void fz_resistance_CheckedChanged(object sender, EventArgs e)
+        {
+            resistanceChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_resistance.Checked;
+        }
+
+        private void scroll_pressure_CheckedChanged(object sender, EventArgs e)
+        {
+            if(!scroll_pressure.Checked)
+            {
+                pressureChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+                pressureChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
+                pressureChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+            }
+        }
+
+        private void scroll_resist_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!scroll_resist.Checked)
+            {
+                resistanceChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+                resistanceChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
+                resistanceChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+            }
+        }
+
+        private void scroll_temp_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!scroll_temp.Checked)
+            {
+               temperatureChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+               temperatureChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
+               temperatureChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+            }
+        }
+
+        private void scroll_humid_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!scroll_temp.Checked)
+            {
+                humidityChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+                humidityChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
+                humidityChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+            }
         }
     }
 }
