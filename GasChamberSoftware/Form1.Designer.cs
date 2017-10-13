@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea16 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend16 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea17 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend17 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea18 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend18 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea19 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend19 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea20 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend20 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.serialPort_nano = new System.IO.Ports.SerialPort(this.components);
             this.serialPort_smu = new System.IO.Ports.SerialPort(this.components);
             this.label1 = new System.Windows.Forms.Label();
@@ -107,12 +107,15 @@
             this.scroll_temp = new System.Windows.Forms.CheckBox();
             this.scroll_humid = new System.Windows.Forms.CheckBox();
             this.scroll_resist = new System.Windows.Forms.CheckBox();
+            this.zoomFactor = new System.Windows.Forms.NumericUpDown();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ivChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pressureChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.temperatureChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.humidityChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.resistanceChart)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomFactor)).BeginInit();
             this.SuspendLayout();
             // 
             // serialPort_nano
@@ -357,19 +360,19 @@
             // 
             // ivChart
             // 
-            chartArea16.Name = "ChartArea1";
-            this.ivChart.ChartAreas.Add(chartArea16);
-            legend16.Name = "Legend1";
-            this.ivChart.Legends.Add(legend16);
+            chartArea1.Name = "ChartArea1";
+            this.ivChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.ivChart.Legends.Add(legend1);
             this.ivChart.Location = new System.Drawing.Point(28, 218);
             this.ivChart.Name = "ivChart";
             this.ivChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Grayscale;
-            series16.ChartArea = "ChartArea1";
-            series16.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series16.IsVisibleInLegend = false;
-            series16.Legend = "Legend1";
-            series16.Name = "Series1";
-            this.ivChart.Series.Add(series16);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.IsVisibleInLegend = false;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.ivChart.Series.Add(series1);
             this.ivChart.Size = new System.Drawing.Size(300, 216);
             this.ivChart.TabIndex = 24;
             this.ivChart.Text = "chart1";
@@ -469,76 +472,76 @@
             // 
             // pressureChart
             // 
-            chartArea17.Name = "ChartArea1";
-            this.pressureChart.ChartAreas.Add(chartArea17);
-            legend17.Name = "Legend1";
-            this.pressureChart.Legends.Add(legend17);
+            chartArea2.Name = "ChartArea1";
+            this.pressureChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.pressureChart.Legends.Add(legend2);
             this.pressureChart.Location = new System.Drawing.Point(639, 59);
             this.pressureChart.Name = "pressureChart";
             this.pressureChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
-            series17.ChartArea = "ChartArea1";
-            series17.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series17.IsVisibleInLegend = false;
-            series17.Legend = "Legend1";
-            series17.Name = "Series1";
-            this.pressureChart.Series.Add(series17);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series2.IsVisibleInLegend = false;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.pressureChart.Series.Add(series2);
             this.pressureChart.Size = new System.Drawing.Size(401, 171);
             this.pressureChart.TabIndex = 34;
             this.pressureChart.Text = "chart1";
             // 
             // temperatureChart
             // 
-            chartArea18.Name = "ChartArea1";
-            this.temperatureChart.ChartAreas.Add(chartArea18);
-            legend18.Name = "Legend1";
-            this.temperatureChart.Legends.Add(legend18);
+            chartArea3.Name = "ChartArea1";
+            this.temperatureChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.temperatureChart.Legends.Add(legend3);
             this.temperatureChart.Location = new System.Drawing.Point(639, 248);
             this.temperatureChart.Name = "temperatureChart";
             this.temperatureChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series18.ChartArea = "ChartArea1";
-            series18.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series18.IsVisibleInLegend = false;
-            series18.Legend = "Legend1";
-            series18.Name = "Series1";
-            this.temperatureChart.Series.Add(series18);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series3.IsVisibleInLegend = false;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.temperatureChart.Series.Add(series3);
             this.temperatureChart.Size = new System.Drawing.Size(401, 186);
             this.temperatureChart.TabIndex = 35;
             this.temperatureChart.Text = "chart2";
             // 
             // humidityChart
             // 
-            chartArea19.Name = "ChartArea1";
-            this.humidityChart.ChartAreas.Add(chartArea19);
-            legend19.Name = "Legend1";
-            this.humidityChart.Legends.Add(legend19);
+            chartArea4.Name = "ChartArea1";
+            this.humidityChart.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.humidityChart.Legends.Add(legend4);
             this.humidityChart.Location = new System.Drawing.Point(638, 458);
             this.humidityChart.Name = "humidityChart";
             this.humidityChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series19.ChartArea = "ChartArea1";
-            series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series19.IsVisibleInLegend = false;
-            series19.Legend = "Legend1";
-            series19.Name = "Series1";
-            this.humidityChart.Series.Add(series19);
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series4.IsVisibleInLegend = false;
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.humidityChart.Series.Add(series4);
             this.humidityChart.Size = new System.Drawing.Size(401, 186);
             this.humidityChart.TabIndex = 36;
             this.humidityChart.Text = "chart3";
             // 
             // resistanceChart
             // 
-            chartArea20.Name = "ChartArea1";
-            this.resistanceChart.ChartAreas.Add(chartArea20);
-            legend20.Name = "Legend1";
-            this.resistanceChart.Legends.Add(legend20);
+            chartArea5.Name = "ChartArea1";
+            this.resistanceChart.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.resistanceChart.Legends.Add(legend5);
             this.resistanceChart.Location = new System.Drawing.Point(28, 453);
             this.resistanceChart.Name = "resistanceChart";
             this.resistanceChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series20.ChartArea = "ChartArea1";
-            series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series20.IsVisibleInLegend = false;
-            series20.Legend = "Legend1";
-            series20.Name = "Series1";
-            this.resistanceChart.Series.Add(series20);
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series5.IsVisibleInLegend = false;
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.resistanceChart.Series.Add(series5);
             this.resistanceChart.Size = new System.Drawing.Size(516, 211);
             this.resistanceChart.TabIndex = 37;
             this.resistanceChart.Text = "chart4";
@@ -758,11 +761,49 @@
             this.scroll_resist.UseVisualStyleBackColor = true;
             this.scroll_resist.CheckedChanged += new System.EventHandler(this.scroll_resist_CheckedChanged);
             // 
+            // zoomFactor
+            // 
+            this.zoomFactor.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.zoomFactor.Location = new System.Drawing.Point(927, 668);
+            this.zoomFactor.Maximum = new decimal(new int[] {
+            20000,
+            0,
+            0,
+            0});
+            this.zoomFactor.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.zoomFactor.Name = "zoomFactor";
+            this.zoomFactor.Size = new System.Drawing.Size(120, 20);
+            this.zoomFactor.TabIndex = 54;
+            this.zoomFactor.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(854, 671);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(67, 13);
+            this.label18.TabIndex = 55;
+            this.label18.Text = "Zoom Factor";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1125, 637);
+            this.ClientSize = new System.Drawing.Size(1125, 733);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.zoomFactor);
             this.Controls.Add(this.scroll_resist);
             this.Controls.Add(this.scroll_humid);
             this.Controls.Add(this.scroll_temp);
@@ -828,6 +869,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.resistanceChart)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.zoomFactor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -898,6 +940,8 @@
         private System.Windows.Forms.CheckBox scroll_temp;
         private System.Windows.Forms.CheckBox scroll_humid;
         private System.Windows.Forms.CheckBox scroll_resist;
+        private System.Windows.Forms.NumericUpDown zoomFactor;
+        private System.Windows.Forms.Label label18;
     }
 }
 

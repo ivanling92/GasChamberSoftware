@@ -171,7 +171,7 @@ namespace GasChamberSoftware
                 {
                     pressureChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
                     pressureChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
-                    pressureChart.ChartAreas[0].AxisX.ScaleView.Size = 100;
+                    pressureChart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
                     if (pressureChart.ChartAreas[0].AxisX.Maximum > pressureChart.ChartAreas[0].AxisX.ScaleView.Size)
                     {
                         pressureChart.ChartAreas[0].AxisX.ScaleView.Scroll(pressureChart.ChartAreas[0].AxisX.Maximum);
@@ -182,7 +182,7 @@ namespace GasChamberSoftware
                 {
                     resistanceChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
                     resistanceChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
-                    resistanceChart.ChartAreas[0].AxisX.ScaleView.Size = 100;
+                    resistanceChart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
                     if (resistanceChart.ChartAreas[0].AxisX.Maximum > resistanceChart.ChartAreas[0].AxisX.ScaleView.Size)
                     {
                         resistanceChart.ChartAreas[0].AxisX.ScaleView.Scroll(resistanceChart.ChartAreas[0].AxisX.Maximum);
@@ -193,7 +193,7 @@ namespace GasChamberSoftware
                 {
                     temperatureChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
                     temperatureChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
-                    temperatureChart.ChartAreas[0].AxisX.ScaleView.Size = 100;
+                    temperatureChart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
                     if (temperatureChart.ChartAreas[0].AxisX.Maximum > temperatureChart.ChartAreas[0].AxisX.ScaleView.Size)
                     {
                         temperatureChart.ChartAreas[0].AxisX.ScaleView.Scroll(temperatureChart.ChartAreas[0].AxisX.Maximum);
@@ -204,7 +204,7 @@ namespace GasChamberSoftware
                 {
                     humidityChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
                     humidityChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
-                    humidityChart.ChartAreas[0].AxisX.ScaleView.Size = 100;
+                    humidityChart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
                     if (humidityChart.ChartAreas[0].AxisX.Maximum > humidityChart.ChartAreas[0].AxisX.ScaleView.Size)
                     {
                         humidityChart.ChartAreas[0].AxisX.ScaleView.Scroll(humidityChart.ChartAreas[0].AxisX.Maximum);
@@ -421,7 +421,7 @@ namespace GasChamberSoftware
 
         private void scroll_humid_CheckedChanged(object sender, EventArgs e)
         {
-            if (!scroll_temp.Checked)
+            if (!scroll_humid.Checked)
             {
                 humidityChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
                 humidityChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
