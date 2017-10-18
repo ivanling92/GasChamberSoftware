@@ -44,6 +44,9 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.serialPort_nano = new System.IO.Ports.SerialPort(this.components);
             this.serialPort_smu = new System.IO.Ports.SerialPort(this.components);
             this.label1 = new System.Windows.Forms.Label();
@@ -84,7 +87,7 @@
             this.pressureChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.temperatureChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.humidityChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.resistanceChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.hiCurrentChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -109,13 +112,15 @@
             this.scroll_resist = new System.Windows.Forms.CheckBox();
             this.zoomFactor = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
+            this.lowCurrentChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.ivChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pressureChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.temperatureChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.humidityChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.resistanceChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hiCurrentChart)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomFactor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lowCurrentChart)).BeginInit();
             this.SuspendLayout();
             // 
             // serialPort_nano
@@ -373,13 +378,13 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.ivChart.Series.Add(series1);
-            this.ivChart.Size = new System.Drawing.Size(300, 216);
+            this.ivChart.Size = new System.Drawing.Size(300, 165);
             this.ivChart.TabIndex = 24;
             this.ivChart.Text = "chart1";
             // 
             // autoCount
             // 
-            this.autoCount.Location = new System.Drawing.Point(441, 297);
+            this.autoCount.Location = new System.Drawing.Point(440, 261);
             this.autoCount.Name = "autoCount";
             this.autoCount.Size = new System.Drawing.Size(58, 20);
             this.autoCount.TabIndex = 26;
@@ -388,7 +393,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(340, 300);
+            this.label11.Location = new System.Drawing.Point(339, 264);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(83, 13);
             this.label11.TabIndex = 25;
@@ -397,7 +402,7 @@
             // autoRead
             // 
             this.autoRead.Enabled = false;
-            this.autoRead.Location = new System.Drawing.Point(511, 295);
+            this.autoRead.Location = new System.Drawing.Point(510, 259);
             this.autoRead.Name = "autoRead";
             this.autoRead.Size = new System.Drawing.Size(77, 23);
             this.autoRead.TabIndex = 27;
@@ -407,7 +412,7 @@
             // 
             // memCount
             // 
-            this.memCount.Location = new System.Drawing.Point(451, 329);
+            this.memCount.Location = new System.Drawing.Point(450, 293);
             this.memCount.Name = "memCount";
             this.memCount.ReadOnly = true;
             this.memCount.Size = new System.Drawing.Size(48, 20);
@@ -417,7 +422,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(340, 332);
+            this.label12.Location = new System.Drawing.Point(339, 296);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(105, 13);
             this.label12.TabIndex = 28;
@@ -427,7 +432,7 @@
             // 
             this.saveButt.Enabled = false;
             this.saveButt.ForeColor = System.Drawing.Color.SeaGreen;
-            this.saveButt.Location = new System.Drawing.Point(343, 360);
+            this.saveButt.Location = new System.Drawing.Point(342, 324);
             this.saveButt.Name = "saveButt";
             this.saveButt.Size = new System.Drawing.Size(77, 23);
             this.saveButt.TabIndex = 30;
@@ -439,7 +444,7 @@
             // 
             this.clearButt.Enabled = false;
             this.clearButt.ForeColor = System.Drawing.Color.DarkRed;
-            this.clearButt.Location = new System.Drawing.Point(426, 360);
+            this.clearButt.Location = new System.Drawing.Point(425, 324);
             this.clearButt.Name = "clearButt";
             this.clearButt.Size = new System.Drawing.Size(77, 23);
             this.clearButt.TabIndex = 31;
@@ -450,7 +455,7 @@
             // stopButt
             // 
             this.stopButt.Enabled = false;
-            this.stopButt.Location = new System.Drawing.Point(511, 327);
+            this.stopButt.Location = new System.Drawing.Point(510, 291);
             this.stopButt.Name = "stopButt";
             this.stopButt.Size = new System.Drawing.Size(77, 23);
             this.stopButt.TabIndex = 32;
@@ -527,24 +532,24 @@
             this.humidityChart.TabIndex = 36;
             this.humidityChart.Text = "chart3";
             // 
-            // resistanceChart
+            // hiCurrentChart
             // 
             chartArea5.Name = "ChartArea1";
-            this.resistanceChart.ChartAreas.Add(chartArea5);
+            this.hiCurrentChart.ChartAreas.Add(chartArea5);
             legend5.Name = "Legend1";
-            this.resistanceChart.Legends.Add(legend5);
-            this.resistanceChart.Location = new System.Drawing.Point(28, 453);
-            this.resistanceChart.Name = "resistanceChart";
-            this.resistanceChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            this.hiCurrentChart.Legends.Add(legend5);
+            this.hiCurrentChart.Location = new System.Drawing.Point(28, 413);
+            this.hiCurrentChart.Name = "hiCurrentChart";
+            this.hiCurrentChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
             series5.ChartArea = "ChartArea1";
             series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
             series5.IsVisibleInLegend = false;
             series5.Legend = "Legend1";
             series5.Name = "Series1";
-            this.resistanceChart.Series.Add(series5);
-            this.resistanceChart.Size = new System.Drawing.Size(516, 211);
-            this.resistanceChart.TabIndex = 37;
-            this.resistanceChart.Text = "chart4";
+            this.hiCurrentChart.Series.Add(series5);
+            this.hiCurrentChart.Size = new System.Drawing.Size(516, 159);
+            this.hiCurrentChart.TabIndex = 37;
+            this.hiCurrentChart.Text = "chart4";
             // 
             // label13
             // 
@@ -558,11 +563,11 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(28, 437);
+            this.label14.Location = new System.Drawing.Point(28, 397);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(63, 13);
+            this.label14.Size = new System.Drawing.Size(116, 13);
             this.label14.TabIndex = 39;
-            this.label14.Text = "Resistance:";
+            this.label14.Text = "Current (High and Low)";
             // 
             // label15
             // 
@@ -593,7 +598,7 @@
             // 
             // ResetChart
             // 
-            this.ResetChart.Location = new System.Drawing.Point(344, 410);
+            this.ResetChart.Location = new System.Drawing.Point(343, 374);
             this.ResetChart.Name = "ResetChart";
             this.ResetChart.Size = new System.Drawing.Size(75, 23);
             this.ResetChart.TabIndex = 43;
@@ -701,7 +706,7 @@
             // fz_resistance
             // 
             this.fz_resistance.AutoSize = true;
-            this.fz_resistance.Location = new System.Drawing.Point(550, 453);
+            this.fz_resistance.Location = new System.Drawing.Point(550, 413);
             this.fz_resistance.Name = "fz_resistance";
             this.fz_resistance.Size = new System.Drawing.Size(74, 17);
             this.fz_resistance.TabIndex = 49;
@@ -753,7 +758,7 @@
             this.scroll_resist.AutoSize = true;
             this.scroll_resist.Checked = true;
             this.scroll_resist.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.scroll_resist.Location = new System.Drawing.Point(550, 476);
+            this.scroll_resist.Location = new System.Drawing.Point(550, 436);
             this.scroll_resist.Name = "scroll_resist";
             this.scroll_resist.Size = new System.Drawing.Size(77, 17);
             this.scroll_resist.TabIndex = 53;
@@ -797,11 +802,31 @@
             this.label18.TabIndex = 55;
             this.label18.Text = "Zoom Factor";
             // 
+            // lowCurrentChart
+            // 
+            chartArea6.Name = "ChartArea1";
+            this.lowCurrentChart.ChartAreas.Add(chartArea6);
+            legend6.Name = "Legend1";
+            this.lowCurrentChart.Legends.Add(legend6);
+            this.lowCurrentChart.Location = new System.Drawing.Point(28, 578);
+            this.lowCurrentChart.Name = "lowCurrentChart";
+            this.lowCurrentChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series6.IsVisibleInLegend = false;
+            series6.Legend = "Legend1";
+            series6.Name = "Series1";
+            this.lowCurrentChart.Series.Add(series6);
+            this.lowCurrentChart.Size = new System.Drawing.Size(516, 159);
+            this.lowCurrentChart.TabIndex = 56;
+            this.lowCurrentChart.Text = "chart4";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1125, 733);
+            this.Controls.Add(this.lowCurrentChart);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.zoomFactor);
             this.Controls.Add(this.scroll_resist);
@@ -819,7 +844,7 @@
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.resistanceChart);
+            this.Controls.Add(this.hiCurrentChart);
             this.Controls.Add(this.humidityChart);
             this.Controls.Add(this.temperatureChart);
             this.Controls.Add(this.pressureChart);
@@ -866,10 +891,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pressureChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.temperatureChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.humidityChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.resistanceChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hiCurrentChart)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomFactor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lowCurrentChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -917,7 +943,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart pressureChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart temperatureChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart humidityChart;
-        private System.Windows.Forms.DataVisualization.Charting.Chart resistanceChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart hiCurrentChart;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
@@ -942,6 +968,7 @@
         private System.Windows.Forms.CheckBox scroll_resist;
         private System.Windows.Forms.NumericUpDown zoomFactor;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.DataVisualization.Charting.Chart lowCurrentChart;
     }
 }
 

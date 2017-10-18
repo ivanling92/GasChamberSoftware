@@ -41,7 +41,8 @@ namespace GasChamberSoftware
                 updateDisplay();
             }
             pressureChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_pressure.Checked;
-            resistanceChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_resistance.Checked;
+            hiCurrentChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_resistance.Checked;
+            lowCurrentChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_resistance.Checked;
             temperatureChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_temp.Checked;
             humidityChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_humidity.Checked;
         }
@@ -76,7 +77,10 @@ namespace GasChamberSoftware
                 nanoDone = false;
                 readAllButt.Enabled = true;
                 DateTime curDT = DateTime.Now;
-                updateChart(iv_curve, pressureBox.Text, tempBox.Text, humidBox.Text, resistBox.Text, curDT.ToLongTimeString());
+                string[] ivPoints = iv_curve.Split(';');
+                string lowCurrent = ivPoints[0].Split(',')[1];
+                string hiCurrent = ivPoints[ivPoints.Count()-2].Split(',')[1];
+                updateChart(iv_curve, pressureBox.Text, tempBox.Text, humidBox.Text, hiCurrent, lowCurrent, curDT.ToLongTimeString());
                 object sender = null;
                 EventArgs e = null;
                 readAll_click(sender, e);
@@ -130,14 +134,19 @@ namespace GasChamberSoftware
                     autoRead.Enabled = true;
                 }
                 DateTime curDT = DateTime.Now;
-                updateChart(iv_curve, pressureBox.Text, tempBox.Text, humidBox.Text, resistBox.Text, curDT.ToLongTimeString());
-                logFile.Add(curDT.ToString()+","+pressureBox.Text + "," + tempBox.Text + "," + humidBox.Text + "," + ledBox.Text + "," + resistBox.Text + "," + startVolt.Text + "," + endVolt.Text + "," + intVolt.Text);
+                //Quickfix - plotted the current instead of resistance to solve the resistance problem
+                string[] ivPoints = iv_curve.Split(';');
+                string lowCurrent = ivPoints[0].Split(',')[1];
+                string hiCurrent = ivPoints[ivPoints.Count()-2].Split(',')[1];
+                //end of quickfix
+                updateChart(iv_curve, pressureBox.Text, tempBox.Text, humidBox.Text, hiCurrent,lowCurrent, curDT.ToLongTimeString());
+                logFile.Add(curDT.ToString()+","+pressureBox.Text + "," + tempBox.Text + "," + humidBox.Text + "," + ledBox.Text + "," + resistBox.Text + "," + hiCurrent + "," +lowCurrent + "," + startVolt.Text + "," + endVolt.Text + "," + intVolt.Text);
                 logCount++;
                 memCount.Text = logCount.ToString();
             }
         }
 
-        private void updateChart(string iv_curve, string pressure, string temperature, string humidity, string resistance, string datetime)
+        private void updateChart(string iv_curve, string pressure, string temperature, string humidity, string currentHi, string currentLow, string datetime)
         {
             string[] ivPoints = iv_curve.Split(';');
             ivChart.Series["Series1"].Points.Clear();
@@ -165,9 +174,12 @@ namespace GasChamberSoftware
                 temperatureChart.Series["Series1"].Points.AddXY(datetime, temperature);
                 humidityChart.ChartAreas[0].AxisY.Title = "Humidity (%RH)";
                 humidityChart.Series["Series1"].Points.AddXY(datetime, humidity);
-                resistanceChart.ChartAreas[0].AxisY.Title = "Resistance (Ohm)";
-                resistanceChart.Series["Series1"].Points.AddXY(datetime, resistance);
-                if(scroll_pressure.Checked)
+                hiCurrentChart.ChartAreas[0].AxisY.Title = "Current at high bias (A)";
+                hiCurrentChart.Series["Series1"].Points.AddXY(datetime, currentHi);
+                lowCurrentChart.ChartAreas[0].AxisY.Title = "Current at low bias (A)";
+                lowCurrentChart.Series["Series1"].Points.AddXY(datetime, currentLow);
+
+                if (scroll_pressure.Checked)
                 {
                     pressureChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
                     pressureChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
@@ -180,13 +192,23 @@ namespace GasChamberSoftware
 
                 if (scroll_resist.Checked)
                 {
-                    resistanceChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-                    resistanceChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
-                    resistanceChart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
-                    if (resistanceChart.ChartAreas[0].AxisX.Maximum > resistanceChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    hiCurrentChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                    hiCurrentChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
+                    hiCurrentChart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
+                    if (hiCurrentChart.ChartAreas[0].AxisX.Maximum > hiCurrentChart.ChartAreas[0].AxisX.ScaleView.Size)
                     {
-                        resistanceChart.ChartAreas[0].AxisX.ScaleView.Scroll(resistanceChart.ChartAreas[0].AxisX.Maximum);
+                        hiCurrentChart.ChartAreas[0].AxisX.ScaleView.Scroll(hiCurrentChart.ChartAreas[0].AxisX.Maximum);
                     }
+
+                    lowCurrentChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                    lowCurrentChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
+                    lowCurrentChart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
+                    if (lowCurrentChart.ChartAreas[0].AxisX.Maximum > lowCurrentChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    {
+                        lowCurrentChart.ChartAreas[0].AxisX.ScaleView.Scroll(lowCurrentChart.ChartAreas[0].AxisX.Maximum);
+                    }
+
+
                 }
 
                 if (scroll_temp.Checked)
@@ -325,7 +347,7 @@ namespace GasChamberSoftware
         {
             using (var writer = new StreamWriter(saveFileDialog1.FileName))
             {
-                writer.WriteLine("TimeStamp,Pressure,Temperature,Humidity,LEDStatus,Resistance,Vstart,Vend,Vint");
+                writer.WriteLine("TimeStamp,Pressure,Temperature,Humidity,LEDStatus,Resistance,HiCurrent,LowCurrent,Vstart,Vend,Vint");
                 foreach (string loggedline in logFile)
                 {
                     writer.WriteLine(loggedline);
@@ -361,7 +383,8 @@ namespace GasChamberSoftware
             pressureChart.Series["Series1"].Points.Clear();
             temperatureChart.Series["Series1"].Points.Clear();
             humidityChart.Series["Series1"].Points.Clear();
-            resistanceChart.Series["Series1"].Points.Clear();
+            hiCurrentChart.Series["Series1"].Points.Clear();
+            lowCurrentChart.Series["Series1"].Points.Clear();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -386,7 +409,7 @@ namespace GasChamberSoftware
 
         private void fz_resistance_CheckedChanged(object sender, EventArgs e)
         {
-            resistanceChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_resistance.Checked;
+            hiCurrentChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_resistance.Checked;
         }
 
         private void scroll_pressure_CheckedChanged(object sender, EventArgs e)
@@ -403,9 +426,12 @@ namespace GasChamberSoftware
         {
             if (!scroll_resist.Checked)
             {
-                resistanceChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
-                resistanceChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
-                resistanceChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+                hiCurrentChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+                hiCurrentChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
+                hiCurrentChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+                lowCurrentChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+                lowCurrentChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
+                lowCurrentChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
             }
         }
 
