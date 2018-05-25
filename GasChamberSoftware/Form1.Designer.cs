@@ -47,8 +47,11 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.serialPort_nano = new System.IO.Ports.SerialPort(this.components);
-            this.serialPort_smu = new System.IO.Ports.SerialPort(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pressureBox = new System.Windows.Forms.TextBox();
@@ -56,26 +59,10 @@
             this.humidBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.nano_portname = new System.Windows.Forms.ComboBox();
-            this.smu_portname = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.ConnectLabel = new System.Windows.Forms.Label();
             this.nano_connect = new System.Windows.Forms.Button();
-            this.smu_connect = new System.Windows.Forms.Button();
-            this.ledBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.LEDswitch = new System.Windows.Forms.Button();
-            this.resistBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.readAllButt = new System.Windows.Forms.Button();
             this.intVolt = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.endVolt = new System.Windows.Forms.TextBox();
-            this.startVolt = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.ivChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.autoCount = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.autoRead = new System.Windows.Forms.Button();
             this.memCount = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -83,13 +70,9 @@
             this.clearButt = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.stopButt = new System.Windows.Forms.Button();
-            this.realTime = new System.Windows.Forms.CheckBox();
             this.pressureChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.temperatureChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.humidityChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.hiCurrentChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -105,33 +88,68 @@
             this.fz_pressure = new System.Windows.Forms.CheckBox();
             this.fz_temp = new System.Windows.Forms.CheckBox();
             this.fz_humidity = new System.Windows.Forms.CheckBox();
-            this.fz_resistance = new System.Windows.Forms.CheckBox();
             this.scroll_pressure = new System.Windows.Forms.CheckBox();
             this.scroll_temp = new System.Windows.Forms.CheckBox();
             this.scroll_humid = new System.Windows.Forms.CheckBox();
-            this.scroll_resist = new System.Windows.Forms.CheckBox();
             this.zoomFactor = new System.Windows.Forms.NumericUpDown();
             this.label18 = new System.Windows.Forms.Label();
-            this.lowCurrentChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            ((System.ComponentModel.ISupportInitialize)(this.ivChart)).BeginInit();
+            this.no2Box = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.h2Box = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.nh3Box = new System.Windows.Forms.TextBox();
+            this.coBox = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.DPWMBox = new System.Windows.Forms.TextBox();
+            this.APWMBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.scrollNO2 = new System.Windows.Forms.CheckBox();
+            this.fz_NO2 = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.no2Chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.scroll_nh3 = new System.Windows.Forms.CheckBox();
+            this.fz_NH3 = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.nh3Chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.scroll_co = new System.Windows.Forms.CheckBox();
+            this.fz_CO = new System.Windows.Forms.CheckBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.coChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.scroll_h2 = new System.Windows.Forms.CheckBox();
+            this.fz_h2 = new System.Windows.Forms.CheckBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.h2Chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.statusLogBox = new System.Windows.Forms.RichTextBox();
+            this.StatusLabel = new System.Windows.Forms.Label();
+            this.analyteBox = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.diluentBox = new System.Windows.Forms.ComboBox();
+            this.analyteBar = new System.Windows.Forms.TrackBar();
+            this.diluentBar = new System.Windows.Forms.TrackBar();
+            this.Heat_But = new System.Windows.Forms.Button();
+            this.ambtempBox = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.heaterIndicator = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pressureChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.temperatureChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.humidityChart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hiCurrentChart)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomFactor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lowCurrentChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.no2Chart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nh3Chart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.coChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.h2Chart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.analyteBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.diluentBar)).BeginInit();
             this.SuspendLayout();
             // 
             // serialPort_nano
             // 
-            this.serialPort_nano.PortName = "COM4";
+            this.serialPort_nano.PortName = "COM3";
             this.serialPort_nano.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort_nano_DataReceived);
-            // 
-            // serialPort_smu
-            // 
-            this.serialPort_smu.PortName = "COM5";
-            this.serialPort_smu.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort_smu_DataReceived);
             // 
             // label1
             // 
@@ -147,9 +165,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(31, 74);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 13);
+            this.label2.Size = new System.Drawing.Size(84, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Temperature (c)";
+            this.label2.Text = "Heater Temp (c)";
             // 
             // pressureBox
             // 
@@ -191,51 +209,30 @@
             // 
             this.nano_portname.FormattingEnabled = true;
             this.nano_portname.Items.AddRange(new object[] {
+            "COM3",
             "COM4",
             "COM5",
             "COM6",
             "COM7"});
-            this.nano_portname.Location = new System.Drawing.Point(329, 55);
+            this.nano_portname.Location = new System.Drawing.Point(1145, 216);
             this.nano_portname.Name = "nano_portname";
-            this.nano_portname.Size = new System.Drawing.Size(121, 21);
+            this.nano_portname.Size = new System.Drawing.Size(64, 21);
             this.nano_portname.TabIndex = 6;
-            this.nano_portname.Text = "COM4";
+            this.nano_portname.Text = "COM3";
+            this.nano_portname.SelectedIndexChanged += new System.EventHandler(this.nano_portname_SelectedIndexChanged);
             // 
-            // smu_portname
+            // ConnectLabel
             // 
-            this.smu_portname.FormattingEnabled = true;
-            this.smu_portname.Items.AddRange(new object[] {
-            "COM4",
-            "COM5",
-            "COM6",
-            "COM7"});
-            this.smu_portname.Location = new System.Drawing.Point(329, 94);
-            this.smu_portname.Name = "smu_portname";
-            this.smu_portname.Size = new System.Drawing.Size(121, 21);
-            this.smu_portname.TabIndex = 7;
-            this.smu_portname.Text = "COM5";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(275, 58);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(55, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Nano Port";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(275, 99);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "SMU Port";
+            this.ConnectLabel.AutoSize = true;
+            this.ConnectLabel.Location = new System.Drawing.Point(1142, 196);
+            this.ConnectLabel.Name = "ConnectLabel";
+            this.ConnectLabel.Size = new System.Drawing.Size(55, 13);
+            this.ConnectLabel.TabIndex = 4;
+            this.ConnectLabel.Text = "Nano Port";
             // 
             // nano_connect
             // 
-            this.nano_connect.Location = new System.Drawing.Point(469, 55);
+            this.nano_connect.Location = new System.Drawing.Point(1145, 246);
             this.nano_connect.Name = "nano_connect";
             this.nano_connect.Size = new System.Drawing.Size(75, 23);
             this.nano_connect.TabIndex = 9;
@@ -243,166 +240,28 @@
             this.nano_connect.UseVisualStyleBackColor = true;
             this.nano_connect.Click += new System.EventHandler(this.nano_connect_Click);
             // 
-            // smu_connect
-            // 
-            this.smu_connect.Enabled = false;
-            this.smu_connect.Location = new System.Drawing.Point(469, 94);
-            this.smu_connect.Name = "smu_connect";
-            this.smu_connect.Size = new System.Drawing.Size(75, 23);
-            this.smu_connect.TabIndex = 10;
-            this.smu_connect.Text = "Connect";
-            this.smu_connect.UseVisualStyleBackColor = true;
-            this.smu_connect.Click += new System.EventHandler(this.smu_connect_Click);
-            // 
-            // ledBox
-            // 
-            this.ledBox.Location = new System.Drawing.Point(132, 134);
-            this.ledBox.Name = "ledBox";
-            this.ledBox.ReadOnly = true;
-            this.ledBox.Size = new System.Drawing.Size(100, 20);
-            this.ledBox.TabIndex = 12;
-            this.ledBox.Text = "0";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(31, 137);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(61, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "LED Status";
-            // 
-            // LEDswitch
-            // 
-            this.LEDswitch.Enabled = false;
-            this.LEDswitch.Location = new System.Drawing.Point(347, 134);
-            this.LEDswitch.Name = "LEDswitch";
-            this.LEDswitch.Size = new System.Drawing.Size(75, 23);
-            this.LEDswitch.TabIndex = 13;
-            this.LEDswitch.Text = "Toggle LED";
-            this.LEDswitch.UseVisualStyleBackColor = true;
-            this.LEDswitch.Click += new System.EventHandler(this.LEDswitch_Click);
-            // 
-            // resistBox
-            // 
-            this.resistBox.Location = new System.Drawing.Point(132, 174);
-            this.resistBox.Name = "resistBox";
-            this.resistBox.ReadOnly = true;
-            this.resistBox.Size = new System.Drawing.Size(100, 20);
-            this.resistBox.TabIndex = 15;
-            this.resistBox.Text = "0";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(31, 177);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(60, 13);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Resistance";
-            // 
-            // readAllButt
-            // 
-            this.readAllButt.Enabled = false;
-            this.readAllButt.Location = new System.Drawing.Point(441, 134);
-            this.readAllButt.Name = "readAllButt";
-            this.readAllButt.Size = new System.Drawing.Size(91, 23);
-            this.readAllButt.TabIndex = 17;
-            this.readAllButt.Text = "Read All";
-            this.readAllButt.UseVisualStyleBackColor = true;
-            this.readAllButt.Click += new System.EventHandler(this.readAll_click);
-            // 
             // intVolt
             // 
-            this.intVolt.Location = new System.Drawing.Point(442, 233);
+            this.intVolt.Location = new System.Drawing.Point(1241, 46);
             this.intVolt.Name = "intVolt";
             this.intVolt.Size = new System.Drawing.Size(100, 20);
             this.intVolt.TabIndex = 23;
             this.intVolt.Text = "1";
+            this.intVolt.MouseClick += new System.Windows.Forms.MouseEventHandler(this.intVolt_MouseClick);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(341, 236);
+            this.label8.Location = new System.Drawing.Point(1140, 49);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(58, 13);
+            this.label8.Size = new System.Drawing.Size(45, 13);
             this.label8.TabIndex = 22;
-            this.label8.Text = "Interval (V)";
-            // 
-            // endVolt
-            // 
-            this.endVolt.Location = new System.Drawing.Point(442, 202);
-            this.endVolt.Name = "endVolt";
-            this.endVolt.Size = new System.Drawing.Size(100, 20);
-            this.endVolt.TabIndex = 21;
-            this.endVolt.Text = "3";
-            // 
-            // startVolt
-            // 
-            this.startVolt.Location = new System.Drawing.Point(442, 174);
-            this.startVolt.Name = "startVolt";
-            this.startVolt.Size = new System.Drawing.Size(100, 20);
-            this.startVolt.TabIndex = 20;
-            this.startVolt.Text = "1";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(341, 205);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(81, 13);
-            this.label9.TabIndex = 19;
-            this.label9.Text = "End Voltage (V)";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(341, 174);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(84, 13);
-            this.label10.TabIndex = 18;
-            this.label10.Text = "Start Voltage (V)";
-            // 
-            // ivChart
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.ivChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.ivChart.Legends.Add(legend1);
-            this.ivChart.Location = new System.Drawing.Point(28, 218);
-            this.ivChart.Name = "ivChart";
-            this.ivChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Grayscale;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.IsVisibleInLegend = false;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.ivChart.Series.Add(series1);
-            this.ivChart.Size = new System.Drawing.Size(300, 165);
-            this.ivChart.TabIndex = 24;
-            this.ivChart.Text = "chart1";
-            // 
-            // autoCount
-            // 
-            this.autoCount.Location = new System.Drawing.Point(440, 261);
-            this.autoCount.Name = "autoCount";
-            this.autoCount.Size = new System.Drawing.Size(58, 20);
-            this.autoCount.TabIndex = 26;
-            this.autoCount.Text = "10";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(339, 264);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(83, 13);
-            this.label11.TabIndex = 25;
-            this.label11.Text = "Auto read times:";
+            this.label8.Text = "Interval ";
             // 
             // autoRead
             // 
             this.autoRead.Enabled = false;
-            this.autoRead.Location = new System.Drawing.Point(510, 259);
+            this.autoRead.Location = new System.Drawing.Point(1143, 74);
             this.autoRead.Name = "autoRead";
             this.autoRead.Size = new System.Drawing.Size(77, 23);
             this.autoRead.TabIndex = 27;
@@ -412,7 +271,7 @@
             // 
             // memCount
             // 
-            this.memCount.Location = new System.Drawing.Point(450, 293);
+            this.memCount.Location = new System.Drawing.Point(1249, 106);
             this.memCount.Name = "memCount";
             this.memCount.ReadOnly = true;
             this.memCount.Size = new System.Drawing.Size(48, 20);
@@ -422,7 +281,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(339, 296);
+            this.label12.Location = new System.Drawing.Point(1138, 109);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(105, 13);
             this.label12.TabIndex = 28;
@@ -432,7 +291,7 @@
             // 
             this.saveButt.Enabled = false;
             this.saveButt.ForeColor = System.Drawing.Color.SeaGreen;
-            this.saveButt.Location = new System.Drawing.Point(342, 324);
+            this.saveButt.Location = new System.Drawing.Point(1141, 137);
             this.saveButt.Name = "saveButt";
             this.saveButt.Size = new System.Drawing.Size(77, 23);
             this.saveButt.TabIndex = 30;
@@ -444,7 +303,7 @@
             // 
             this.clearButt.Enabled = false;
             this.clearButt.ForeColor = System.Drawing.Color.DarkRed;
-            this.clearButt.Location = new System.Drawing.Point(425, 324);
+            this.clearButt.Location = new System.Drawing.Point(1224, 137);
             this.clearButt.Name = "clearButt";
             this.clearButt.Size = new System.Drawing.Size(77, 23);
             this.clearButt.TabIndex = 31;
@@ -454,8 +313,7 @@
             // 
             // stopButt
             // 
-            this.stopButt.Enabled = false;
-            this.stopButt.Location = new System.Drawing.Point(510, 291);
+            this.stopButt.Location = new System.Drawing.Point(1226, 74);
             this.stopButt.Name = "stopButt";
             this.stopButt.Size = new System.Drawing.Size(77, 23);
             this.stopButt.TabIndex = 32;
@@ -463,116 +321,67 @@
             this.stopButt.UseVisualStyleBackColor = true;
             this.stopButt.Click += new System.EventHandler(this.stopButt_Click);
             // 
-            // realTime
-            // 
-            this.realTime.AutoSize = true;
-            this.realTime.Enabled = false;
-            this.realTime.Location = new System.Drawing.Point(238, 176);
-            this.realTime.Name = "realTime";
-            this.realTime.Size = new System.Drawing.Size(74, 17);
-            this.realTime.TabIndex = 33;
-            this.realTime.Text = "Real Time";
-            this.realTime.UseVisualStyleBackColor = true;
-            this.realTime.CheckedChanged += new System.EventHandler(this.realTime_CheckedChanged);
-            // 
             // pressureChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.pressureChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.pressureChart.Legends.Add(legend2);
-            this.pressureChart.Location = new System.Drawing.Point(639, 59);
+            chartArea1.Name = "ChartArea1";
+            this.pressureChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.pressureChart.Legends.Add(legend1);
+            this.pressureChart.Location = new System.Drawing.Point(12, 208);
             this.pressureChart.Name = "pressureChart";
             this.pressureChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series2.IsVisibleInLegend = false;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.pressureChart.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series1.IsVisibleInLegend = false;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.pressureChart.Series.Add(series1);
             this.pressureChart.Size = new System.Drawing.Size(401, 171);
             this.pressureChart.TabIndex = 34;
             this.pressureChart.Text = "chart1";
             // 
             // temperatureChart
             // 
-            chartArea3.Name = "ChartArea1";
-            this.temperatureChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.temperatureChart.Legends.Add(legend3);
-            this.temperatureChart.Location = new System.Drawing.Point(639, 248);
+            chartArea2.Name = "ChartArea1";
+            this.temperatureChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.temperatureChart.Legends.Add(legend2);
+            this.temperatureChart.Location = new System.Drawing.Point(12, 406);
             this.temperatureChart.Name = "temperatureChart";
             this.temperatureChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series3.IsVisibleInLegend = false;
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.temperatureChart.Series.Add(series3);
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series2.IsVisibleInLegend = false;
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.temperatureChart.Series.Add(series2);
             this.temperatureChart.Size = new System.Drawing.Size(401, 186);
             this.temperatureChart.TabIndex = 35;
             this.temperatureChart.Text = "chart2";
             // 
             // humidityChart
             // 
-            chartArea4.Name = "ChartArea1";
-            this.humidityChart.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.humidityChart.Legends.Add(legend4);
-            this.humidityChart.Location = new System.Drawing.Point(638, 458);
+            chartArea3.Name = "ChartArea1";
+            this.humidityChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.humidityChart.Legends.Add(legend3);
+            this.humidityChart.Location = new System.Drawing.Point(11, 616);
             this.humidityChart.Name = "humidityChart";
             this.humidityChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series4.IsVisibleInLegend = false;
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.humidityChart.Series.Add(series4);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series3.IsVisibleInLegend = false;
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.humidityChart.Series.Add(series3);
             this.humidityChart.Size = new System.Drawing.Size(401, 186);
             this.humidityChart.TabIndex = 36;
             this.humidityChart.Text = "chart3";
             // 
-            // hiCurrentChart
-            // 
-            chartArea5.Name = "ChartArea1";
-            this.hiCurrentChart.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.hiCurrentChart.Legends.Add(legend5);
-            this.hiCurrentChart.Location = new System.Drawing.Point(28, 413);
-            this.hiCurrentChart.Name = "hiCurrentChart";
-            this.hiCurrentChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
-            series5.ChartArea = "ChartArea1";
-            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            series5.IsVisibleInLegend = false;
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.hiCurrentChart.Series.Add(series5);
-            this.hiCurrentChart.Size = new System.Drawing.Size(516, 159);
-            this.hiCurrentChart.TabIndex = 37;
-            this.hiCurrentChart.Text = "chart4";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(25, 203);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(51, 13);
-            this.label13.TabIndex = 38;
-            this.label13.Text = "IV-Curve:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(28, 397);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(116, 13);
-            this.label14.TabIndex = 39;
-            this.label14.Text = "Current (High and Low)";
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(636, 43);
+            this.label15.Location = new System.Drawing.Point(9, 192);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(51, 13);
             this.label15.TabIndex = 40;
@@ -581,7 +390,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(636, 231);
+            this.label16.Location = new System.Drawing.Point(9, 389);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(70, 13);
             this.label16.TabIndex = 41;
@@ -590,7 +399,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(636, 443);
+            this.label17.Location = new System.Drawing.Point(9, 601);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(50, 13);
             this.label17.TabIndex = 42;
@@ -598,7 +407,7 @@
             // 
             // ResetChart
             // 
-            this.ResetChart.Location = new System.Drawing.Point(343, 374);
+            this.ResetChart.Location = new System.Drawing.Point(132, 165);
             this.ResetChart.Name = "ResetChart";
             this.ResetChart.Size = new System.Drawing.Size(75, 23);
             this.ResetChart.TabIndex = 43;
@@ -609,8 +418,9 @@
             // recordBox
             // 
             this.recordBox.AutoSize = true;
-            this.recordBox.Enabled = false;
-            this.recordBox.Location = new System.Drawing.Point(238, 195);
+            this.recordBox.Checked = true;
+            this.recordBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.recordBox.Location = new System.Drawing.Point(32, 171);
             this.recordBox.Name = "recordBox";
             this.recordBox.Size = new System.Drawing.Size(61, 17);
             this.recordBox.TabIndex = 44;
@@ -624,7 +434,7 @@
             this.editToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1125, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1492, 24);
             this.menuStrip1.TabIndex = 45;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -673,7 +483,7 @@
             // fz_pressure
             // 
             this.fz_pressure.AutoSize = true;
-            this.fz_pressure.Location = new System.Drawing.Point(1046, 61);
+            this.fz_pressure.Location = new System.Drawing.Point(419, 210);
             this.fz_pressure.Name = "fz_pressure";
             this.fz_pressure.Size = new System.Drawing.Size(74, 17);
             this.fz_pressure.TabIndex = 46;
@@ -684,7 +494,7 @@
             // fz_temp
             // 
             this.fz_temp.AutoSize = true;
-            this.fz_temp.Location = new System.Drawing.Point(1046, 248);
+            this.fz_temp.Location = new System.Drawing.Point(419, 406);
             this.fz_temp.Name = "fz_temp";
             this.fz_temp.Size = new System.Drawing.Size(74, 17);
             this.fz_temp.TabIndex = 47;
@@ -695,7 +505,7 @@
             // fz_humidity
             // 
             this.fz_humidity.AutoSize = true;
-            this.fz_humidity.Location = new System.Drawing.Point(1046, 458);
+            this.fz_humidity.Location = new System.Drawing.Point(419, 616);
             this.fz_humidity.Name = "fz_humidity";
             this.fz_humidity.Size = new System.Drawing.Size(74, 17);
             this.fz_humidity.TabIndex = 48;
@@ -703,23 +513,12 @@
             this.fz_humidity.UseVisualStyleBackColor = true;
             this.fz_humidity.CheckedChanged += new System.EventHandler(this.fz_humidity_CheckedChanged);
             // 
-            // fz_resistance
-            // 
-            this.fz_resistance.AutoSize = true;
-            this.fz_resistance.Location = new System.Drawing.Point(550, 413);
-            this.fz_resistance.Name = "fz_resistance";
-            this.fz_resistance.Size = new System.Drawing.Size(74, 17);
-            this.fz_resistance.TabIndex = 49;
-            this.fz_resistance.Text = "From Zero";
-            this.fz_resistance.UseVisualStyleBackColor = true;
-            this.fz_resistance.CheckedChanged += new System.EventHandler(this.fz_resistance_CheckedChanged);
-            // 
             // scroll_pressure
             // 
             this.scroll_pressure.AutoSize = true;
             this.scroll_pressure.Checked = true;
             this.scroll_pressure.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.scroll_pressure.Location = new System.Drawing.Point(1046, 84);
+            this.scroll_pressure.Location = new System.Drawing.Point(419, 233);
             this.scroll_pressure.Name = "scroll_pressure";
             this.scroll_pressure.Size = new System.Drawing.Size(77, 17);
             this.scroll_pressure.TabIndex = 50;
@@ -732,7 +531,7 @@
             this.scroll_temp.AutoSize = true;
             this.scroll_temp.Checked = true;
             this.scroll_temp.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.scroll_temp.Location = new System.Drawing.Point(1046, 271);
+            this.scroll_temp.Location = new System.Drawing.Point(419, 429);
             this.scroll_temp.Name = "scroll_temp";
             this.scroll_temp.Size = new System.Drawing.Size(77, 17);
             this.scroll_temp.TabIndex = 51;
@@ -745,26 +544,13 @@
             this.scroll_humid.AutoSize = true;
             this.scroll_humid.Checked = true;
             this.scroll_humid.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.scroll_humid.Location = new System.Drawing.Point(1046, 481);
+            this.scroll_humid.Location = new System.Drawing.Point(419, 639);
             this.scroll_humid.Name = "scroll_humid";
             this.scroll_humid.Size = new System.Drawing.Size(77, 17);
             this.scroll_humid.TabIndex = 52;
             this.scroll_humid.Text = "Scroll view";
             this.scroll_humid.UseVisualStyleBackColor = true;
             this.scroll_humid.CheckedChanged += new System.EventHandler(this.scroll_humid_CheckedChanged);
-            // 
-            // scroll_resist
-            // 
-            this.scroll_resist.AutoSize = true;
-            this.scroll_resist.Checked = true;
-            this.scroll_resist.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.scroll_resist.Location = new System.Drawing.Point(550, 436);
-            this.scroll_resist.Name = "scroll_resist";
-            this.scroll_resist.Size = new System.Drawing.Size(77, 17);
-            this.scroll_resist.TabIndex = 53;
-            this.scroll_resist.Text = "Scroll view";
-            this.scroll_resist.UseVisualStyleBackColor = true;
-            this.scroll_resist.CheckedChanged += new System.EventHandler(this.scroll_resist_CheckedChanged);
             // 
             // zoomFactor
             // 
@@ -773,7 +559,7 @@
             0,
             0,
             0});
-            this.zoomFactor.Location = new System.Drawing.Point(927, 668);
+            this.zoomFactor.Location = new System.Drawing.Point(85, 825);
             this.zoomFactor.Maximum = new decimal(new int[] {
             20000,
             0,
@@ -796,44 +582,503 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(854, 671);
+            this.label18.Location = new System.Drawing.Point(12, 828);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(67, 13);
             this.label18.TabIndex = 55;
             this.label18.Text = "Zoom Factor";
             // 
-            // lowCurrentChart
+            // no2Box
+            // 
+            this.no2Box.Location = new System.Drawing.Point(388, 132);
+            this.no2Box.Name = "no2Box";
+            this.no2Box.ReadOnly = true;
+            this.no2Box.Size = new System.Drawing.Size(100, 20);
+            this.no2Box.TabIndex = 57;
+            this.no2Box.Text = "0";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(287, 134);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(61, 13);
+            this.label6.TabIndex = 64;
+            this.label6.Text = "NO2 (PPM)";
+            // 
+            // h2Box
+            // 
+            this.h2Box.Location = new System.Drawing.Point(388, 102);
+            this.h2Box.Name = "h2Box";
+            this.h2Box.ReadOnly = true;
+            this.h2Box.Size = new System.Drawing.Size(100, 20);
+            this.h2Box.TabIndex = 63;
+            this.h2Box.Text = "0";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(287, 105);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 13);
+            this.label7.TabIndex = 62;
+            this.label7.Text = "H2 (PPM)";
+            // 
+            // nh3Box
+            // 
+            this.nh3Box.Location = new System.Drawing.Point(388, 71);
+            this.nh3Box.Name = "nh3Box";
+            this.nh3Box.ReadOnly = true;
+            this.nh3Box.Size = new System.Drawing.Size(100, 20);
+            this.nh3Box.TabIndex = 61;
+            this.nh3Box.Text = "0";
+            // 
+            // coBox
+            // 
+            this.coBox.Location = new System.Drawing.Point(388, 43);
+            this.coBox.Name = "coBox";
+            this.coBox.ReadOnly = true;
+            this.coBox.Size = new System.Drawing.Size(100, 20);
+            this.coBox.TabIndex = 60;
+            this.coBox.Text = "0";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(287, 74);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(61, 13);
+            this.label9.TabIndex = 59;
+            this.label9.Text = "NH3 (PPM)";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(287, 43);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(54, 13);
+            this.label10.TabIndex = 58;
+            this.label10.Text = "CO (PPM)";
+            // 
+            // DPWMBox
+            // 
+            this.DPWMBox.Location = new System.Drawing.Point(625, 71);
+            this.DPWMBox.Name = "DPWMBox";
+            this.DPWMBox.ReadOnly = true;
+            this.DPWMBox.Size = new System.Drawing.Size(100, 20);
+            this.DPWMBox.TabIndex = 68;
+            this.DPWMBox.Text = "0";
+            // 
+            // APWMBox
+            // 
+            this.APWMBox.Location = new System.Drawing.Point(625, 43);
+            this.APWMBox.Name = "APWMBox";
+            this.APWMBox.ReadOnly = true;
+            this.APWMBox.Size = new System.Drawing.Size(100, 20);
+            this.APWMBox.TabIndex = 67;
+            this.APWMBox.Text = "0";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(525, 74);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(87, 13);
+            this.label5.TabIndex = 66;
+            this.label5.Text = "Diluent PWM (%)";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(524, 43);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(89, 13);
+            this.label11.TabIndex = 65;
+            this.label11.Text = "Analyte PWM (%)";
+            // 
+            // scrollNO2
+            // 
+            this.scrollNO2.AutoSize = true;
+            this.scrollNO2.Checked = true;
+            this.scrollNO2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.scrollNO2.Location = new System.Drawing.Point(935, 235);
+            this.scrollNO2.Name = "scrollNO2";
+            this.scrollNO2.Size = new System.Drawing.Size(77, 17);
+            this.scrollNO2.TabIndex = 72;
+            this.scrollNO2.Text = "Scroll view";
+            this.scrollNO2.UseVisualStyleBackColor = true;
+            this.scrollNO2.CheckedChanged += new System.EventHandler(this.scrollNO2_CheckedChanged);
+            // 
+            // fz_NO2
+            // 
+            this.fz_NO2.AutoSize = true;
+            this.fz_NO2.Location = new System.Drawing.Point(935, 212);
+            this.fz_NO2.Name = "fz_NO2";
+            this.fz_NO2.Size = new System.Drawing.Size(74, 17);
+            this.fz_NO2.TabIndex = 71;
+            this.fz_NO2.Text = "From Zero";
+            this.fz_NO2.UseVisualStyleBackColor = true;
+            this.fz_NO2.CheckedChanged += new System.EventHandler(this.fz_NO2_CheckedChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(525, 194);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(32, 13);
+            this.label13.TabIndex = 70;
+            this.label13.Text = "NO2:";
+            // 
+            // no2Chart
+            // 
+            chartArea4.Name = "ChartArea1";
+            this.no2Chart.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.no2Chart.Legends.Add(legend4);
+            this.no2Chart.Location = new System.Drawing.Point(528, 210);
+            this.no2Chart.Name = "no2Chart";
+            this.no2Chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series4.IsVisibleInLegend = false;
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.no2Chart.Series.Add(series4);
+            this.no2Chart.Size = new System.Drawing.Size(401, 171);
+            this.no2Chart.TabIndex = 69;
+            this.no2Chart.Text = "chart1";
+            // 
+            // scroll_nh3
+            // 
+            this.scroll_nh3.AutoSize = true;
+            this.scroll_nh3.Checked = true;
+            this.scroll_nh3.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.scroll_nh3.Location = new System.Drawing.Point(935, 446);
+            this.scroll_nh3.Name = "scroll_nh3";
+            this.scroll_nh3.Size = new System.Drawing.Size(77, 17);
+            this.scroll_nh3.TabIndex = 76;
+            this.scroll_nh3.Text = "Scroll view";
+            this.scroll_nh3.UseVisualStyleBackColor = true;
+            this.scroll_nh3.CheckedChanged += new System.EventHandler(this.scroll_nh3_CheckedChanged);
+            // 
+            // fz_NH3
+            // 
+            this.fz_NH3.AutoSize = true;
+            this.fz_NH3.Location = new System.Drawing.Point(935, 423);
+            this.fz_NH3.Name = "fz_NH3";
+            this.fz_NH3.Size = new System.Drawing.Size(74, 17);
+            this.fz_NH3.TabIndex = 75;
+            this.fz_NH3.Text = "From Zero";
+            this.fz_NH3.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(525, 405);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 74;
+            this.label4.Text = "NH3:";
+            // 
+            // nh3Chart
+            // 
+            chartArea5.Name = "ChartArea1";
+            this.nh3Chart.ChartAreas.Add(chartArea5);
+            legend5.Name = "Legend1";
+            this.nh3Chart.Legends.Add(legend5);
+            this.nh3Chart.Location = new System.Drawing.Point(528, 421);
+            this.nh3Chart.Name = "nh3Chart";
+            this.nh3Chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series5.IsVisibleInLegend = false;
+            series5.Legend = "Legend1";
+            series5.Name = "Series1";
+            this.nh3Chart.Series.Add(series5);
+            this.nh3Chart.Size = new System.Drawing.Size(401, 171);
+            this.nh3Chart.TabIndex = 73;
+            this.nh3Chart.Text = "chart1";
+            // 
+            // scroll_co
+            // 
+            this.scroll_co.AutoSize = true;
+            this.scroll_co.Checked = true;
+            this.scroll_co.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.scroll_co.Location = new System.Drawing.Point(934, 656);
+            this.scroll_co.Name = "scroll_co";
+            this.scroll_co.Size = new System.Drawing.Size(77, 17);
+            this.scroll_co.TabIndex = 80;
+            this.scroll_co.Text = "Scroll view";
+            this.scroll_co.UseVisualStyleBackColor = true;
+            this.scroll_co.CheckedChanged += new System.EventHandler(this.scroll_co_CheckedChanged);
+            // 
+            // fz_CO
+            // 
+            this.fz_CO.AutoSize = true;
+            this.fz_CO.Location = new System.Drawing.Point(934, 633);
+            this.fz_CO.Name = "fz_CO";
+            this.fz_CO.Size = new System.Drawing.Size(74, 17);
+            this.fz_CO.TabIndex = 79;
+            this.fz_CO.Text = "From Zero";
+            this.fz_CO.UseVisualStyleBackColor = true;
+            this.fz_CO.CheckedChanged += new System.EventHandler(this.fz_CO_CheckedChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(524, 615);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(22, 13);
+            this.label14.TabIndex = 78;
+            this.label14.Text = "CO";
+            this.label14.Click += new System.EventHandler(this.label14_Click);
+            // 
+            // coChart
             // 
             chartArea6.Name = "ChartArea1";
-            this.lowCurrentChart.ChartAreas.Add(chartArea6);
+            this.coChart.ChartAreas.Add(chartArea6);
             legend6.Name = "Legend1";
-            this.lowCurrentChart.Legends.Add(legend6);
-            this.lowCurrentChart.Location = new System.Drawing.Point(28, 578);
-            this.lowCurrentChart.Name = "lowCurrentChart";
-            this.lowCurrentChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            this.coChart.Legends.Add(legend6);
+            this.coChart.Location = new System.Drawing.Point(527, 631);
+            this.coChart.Name = "coChart";
+            this.coChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
             series6.ChartArea = "ChartArea1";
             series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
             series6.IsVisibleInLegend = false;
             series6.Legend = "Legend1";
             series6.Name = "Series1";
-            this.lowCurrentChart.Series.Add(series6);
-            this.lowCurrentChart.Size = new System.Drawing.Size(516, 159);
-            this.lowCurrentChart.TabIndex = 56;
-            this.lowCurrentChart.Text = "chart4";
+            this.coChart.Series.Add(series6);
+            this.coChart.Size = new System.Drawing.Size(401, 171);
+            this.coChart.TabIndex = 77;
+            this.coChart.Text = "chart2";
+            // 
+            // scroll_h2
+            // 
+            this.scroll_h2.AutoSize = true;
+            this.scroll_h2.Checked = true;
+            this.scroll_h2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.scroll_h2.Location = new System.Drawing.Point(935, 868);
+            this.scroll_h2.Name = "scroll_h2";
+            this.scroll_h2.Size = new System.Drawing.Size(77, 17);
+            this.scroll_h2.TabIndex = 84;
+            this.scroll_h2.Text = "Scroll view";
+            this.scroll_h2.UseVisualStyleBackColor = true;
+            this.scroll_h2.CheckedChanged += new System.EventHandler(this.scroll_h2_CheckedChanged);
+            // 
+            // fz_h2
+            // 
+            this.fz_h2.AutoSize = true;
+            this.fz_h2.Location = new System.Drawing.Point(935, 845);
+            this.fz_h2.Name = "fz_h2";
+            this.fz_h2.Size = new System.Drawing.Size(74, 17);
+            this.fz_h2.TabIndex = 83;
+            this.fz_h2.Text = "From Zero";
+            this.fz_h2.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(525, 827);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(21, 13);
+            this.label19.TabIndex = 82;
+            this.label19.Text = "H2";
+            // 
+            // h2Chart
+            // 
+            chartArea7.Name = "ChartArea1";
+            this.h2Chart.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            this.h2Chart.Legends.Add(legend7);
+            this.h2Chart.Location = new System.Drawing.Point(528, 843);
+            this.h2Chart.Name = "h2Chart";
+            this.h2Chart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+            series7.IsVisibleInLegend = false;
+            series7.Legend = "Legend1";
+            series7.Name = "Series1";
+            this.h2Chart.Series.Add(series7);
+            this.h2Chart.Size = new System.Drawing.Size(401, 171);
+            this.h2Chart.TabIndex = 81;
+            this.h2Chart.Text = "chart2";
+            // 
+            // statusLogBox
+            // 
+            this.statusLogBox.Location = new System.Drawing.Point(1145, 306);
+            this.statusLogBox.Name = "statusLogBox";
+            this.statusLogBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.statusLogBox.Size = new System.Drawing.Size(335, 117);
+            this.statusLogBox.TabIndex = 85;
+            this.statusLogBox.Text = "";
+            this.statusLogBox.TextChanged += new System.EventHandler(this.statusLogBox_TextChanged);
+            // 
+            // StatusLabel
+            // 
+            this.StatusLabel.AutoSize = true;
+            this.StatusLabel.Location = new System.Drawing.Point(1142, 290);
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(40, 13);
+            this.StatusLabel.TabIndex = 86;
+            this.StatusLabel.Text = "Status:";
+            // 
+            // analyteBox
+            // 
+            this.analyteBox.FormattingEnabled = true;
+            this.analyteBox.Items.AddRange(new object[] {
+            "NO2",
+            "NH3",
+            "CO",
+            "H2O",
+            "Others"});
+            this.analyteBox.Location = new System.Drawing.Point(625, 106);
+            this.analyteBox.Name = "analyteBox";
+            this.analyteBox.Size = new System.Drawing.Size(121, 21);
+            this.analyteBox.TabIndex = 87;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(525, 109);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(79, 13);
+            this.label20.TabIndex = 88;
+            this.label20.Text = "Current Analyte";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(525, 137);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(77, 13);
+            this.label21.TabIndex = 90;
+            this.label21.Text = "Current Diluent";
+            // 
+            // diluentBox
+            // 
+            this.diluentBox.FormattingEnabled = true;
+            this.diluentBox.Items.AddRange(new object[] {
+            "N2",
+            "O2/N2",
+            "Atm Air",
+            "He",
+            "Ar",
+            "Others"});
+            this.diluentBox.Location = new System.Drawing.Point(625, 134);
+            this.diluentBox.Name = "diluentBox";
+            this.diluentBox.Size = new System.Drawing.Size(121, 21);
+            this.diluentBox.TabIndex = 89;
+            // 
+            // analyteBar
+            // 
+            this.analyteBar.LargeChange = 10;
+            this.analyteBar.Location = new System.Drawing.Point(755, 42);
+            this.analyteBar.Maximum = 100;
+            this.analyteBar.Name = "analyteBar";
+            this.analyteBar.Size = new System.Drawing.Size(257, 45);
+            this.analyteBar.SmallChange = 5;
+            this.analyteBar.TabIndex = 91;
+            this.analyteBar.Scroll += new System.EventHandler(this.analyteBar_Scroll);
+            // 
+            // diluentBar
+            // 
+            this.diluentBar.LargeChange = 10;
+            this.diluentBar.Location = new System.Drawing.Point(755, 71);
+            this.diluentBar.Maximum = 100;
+            this.diluentBar.Name = "diluentBar";
+            this.diluentBar.Size = new System.Drawing.Size(257, 45);
+            this.diluentBar.SmallChange = 5;
+            this.diluentBar.TabIndex = 92;
+            this.diluentBar.Scroll += new System.EventHandler(this.diluentBar_Scroll);
+            // 
+            // Heat_But
+            // 
+            this.Heat_But.Location = new System.Drawing.Point(764, 109);
+            this.Heat_But.Name = "Heat_But";
+            this.Heat_But.Size = new System.Drawing.Size(137, 23);
+            this.Heat_But.TabIndex = 93;
+            this.Heat_But.Text = "Start Heating";
+            this.Heat_But.UseVisualStyleBackColor = true;
+            this.Heat_But.Click += new System.EventHandler(this.Heat_But_Click);
+            // 
+            // ambtempBox
+            // 
+            this.ambtempBox.Location = new System.Drawing.Point(132, 137);
+            this.ambtempBox.Name = "ambtempBox";
+            this.ambtempBox.ReadOnly = true;
+            this.ambtempBox.Size = new System.Drawing.Size(100, 20);
+            this.ambtempBox.TabIndex = 95;
+            this.ambtempBox.Text = "0";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(31, 140);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(90, 13);
+            this.label22.TabIndex = 94;
+            this.label22.Text = "Ambient Temp (c)";
+            // 
+            // heaterIndicator
+            // 
+            this.heaterIndicator.AutoSize = true;
+            this.heaterIndicator.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.heaterIndicator.Location = new System.Drawing.Point(907, 114);
+            this.heaterIndicator.Name = "heaterIndicator";
+            this.heaterIndicator.Size = new System.Drawing.Size(74, 13);
+            this.heaterIndicator.TabIndex = 96;
+            this.heaterIndicator.Text = "HEATER OFF";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1125, 733);
-            this.Controls.Add(this.lowCurrentChart);
+            this.ClientSize = new System.Drawing.Size(1492, 1045);
+            this.Controls.Add(this.heaterIndicator);
+            this.Controls.Add(this.ambtempBox);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.Heat_But);
+            this.Controls.Add(this.diluentBar);
+            this.Controls.Add(this.analyteBar);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.diluentBox);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.analyteBox);
+            this.Controls.Add(this.StatusLabel);
+            this.Controls.Add(this.statusLogBox);
+            this.Controls.Add(this.scroll_h2);
+            this.Controls.Add(this.fz_h2);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.h2Chart);
+            this.Controls.Add(this.scroll_co);
+            this.Controls.Add(this.fz_CO);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.coChart);
+            this.Controls.Add(this.scroll_nh3);
+            this.Controls.Add(this.fz_NH3);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.nh3Chart);
+            this.Controls.Add(this.scrollNO2);
+            this.Controls.Add(this.fz_NO2);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.no2Chart);
+            this.Controls.Add(this.DPWMBox);
+            this.Controls.Add(this.APWMBox);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.h2Box);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.nh3Box);
+            this.Controls.Add(this.coBox);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.no2Box);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.zoomFactor);
-            this.Controls.Add(this.scroll_resist);
             this.Controls.Add(this.scroll_humid);
             this.Controls.Add(this.scroll_temp);
             this.Controls.Add(this.scroll_pressure);
-            this.Controls.Add(this.fz_resistance);
             this.Controls.Add(this.fz_humidity);
             this.Controls.Add(this.fz_temp);
             this.Controls.Add(this.fz_pressure);
@@ -842,60 +1087,46 @@
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.hiCurrentChart);
             this.Controls.Add(this.humidityChart);
             this.Controls.Add(this.temperatureChart);
             this.Controls.Add(this.pressureChart);
-            this.Controls.Add(this.realTime);
             this.Controls.Add(this.stopButt);
             this.Controls.Add(this.clearButt);
             this.Controls.Add(this.saveButt);
             this.Controls.Add(this.memCount);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.autoRead);
-            this.Controls.Add(this.autoCount);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.ivChart);
             this.Controls.Add(this.intVolt);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.endVolt);
-            this.Controls.Add(this.startVolt);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.readAllButt);
-            this.Controls.Add(this.resistBox);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.LEDswitch);
-            this.Controls.Add(this.ledBox);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.smu_connect);
             this.Controls.Add(this.nano_connect);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.smu_portname);
             this.Controls.Add(this.nano_portname);
             this.Controls.Add(this.humidBox);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.ConnectLabel);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tempBox);
             this.Controls.Add(this.pressureBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Gas Chamber - SOTON";
+            this.TransparencyKey = System.Drawing.Color.DarkBlue;
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.ivChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pressureChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.temperatureChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.humidityChart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hiCurrentChart)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomFactor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lowCurrentChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.no2Chart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nh3Chart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.coChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.h2Chart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.analyteBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.diluentBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -904,7 +1135,6 @@
         #endregion
 
         private System.IO.Ports.SerialPort serialPort_nano;
-        private System.IO.Ports.SerialPort serialPort_smu;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox pressureBox;
@@ -912,26 +1142,10 @@
         private System.Windows.Forms.TextBox humidBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox nano_portname;
-        private System.Windows.Forms.ComboBox smu_portname;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label ConnectLabel;
         private System.Windows.Forms.Button nano_connect;
-        private System.Windows.Forms.Button smu_connect;
-        private System.Windows.Forms.TextBox ledBox;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button LEDswitch;
-        private System.Windows.Forms.TextBox resistBox;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button readAllButt;
         private System.Windows.Forms.TextBox intVolt;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox endVolt;
-        private System.Windows.Forms.TextBox startVolt;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.DataVisualization.Charting.Chart ivChart;
-        private System.Windows.Forms.TextBox autoCount;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button autoRead;
         private System.Windows.Forms.TextBox memCount;
         private System.Windows.Forms.Label label12;
@@ -939,13 +1153,9 @@
         private System.Windows.Forms.Button clearButt;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button stopButt;
-        private System.Windows.Forms.CheckBox realTime;
         private System.Windows.Forms.DataVisualization.Charting.Chart pressureChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart temperatureChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart humidityChart;
-        private System.Windows.Forms.DataVisualization.Charting.Chart hiCurrentChart;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
@@ -961,14 +1171,51 @@
         private System.Windows.Forms.CheckBox fz_pressure;
         private System.Windows.Forms.CheckBox fz_temp;
         private System.Windows.Forms.CheckBox fz_humidity;
-        private System.Windows.Forms.CheckBox fz_resistance;
         private System.Windows.Forms.CheckBox scroll_pressure;
         private System.Windows.Forms.CheckBox scroll_temp;
         private System.Windows.Forms.CheckBox scroll_humid;
-        private System.Windows.Forms.CheckBox scroll_resist;
         private System.Windows.Forms.NumericUpDown zoomFactor;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.DataVisualization.Charting.Chart lowCurrentChart;
+        private System.Windows.Forms.TextBox no2Box;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox h2Box;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox nh3Box;
+        private System.Windows.Forms.TextBox coBox;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox DPWMBox;
+        private System.Windows.Forms.TextBox APWMBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.CheckBox scrollNO2;
+        private System.Windows.Forms.CheckBox fz_NO2;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.DataVisualization.Charting.Chart no2Chart;
+        private System.Windows.Forms.CheckBox scroll_nh3;
+        private System.Windows.Forms.CheckBox fz_NH3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataVisualization.Charting.Chart nh3Chart;
+        private System.Windows.Forms.CheckBox scroll_co;
+        private System.Windows.Forms.CheckBox fz_CO;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.DataVisualization.Charting.Chart coChart;
+        private System.Windows.Forms.CheckBox scroll_h2;
+        private System.Windows.Forms.CheckBox fz_h2;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.DataVisualization.Charting.Chart h2Chart;
+        private System.Windows.Forms.RichTextBox statusLogBox;
+        private System.Windows.Forms.Label StatusLabel;
+        private System.Windows.Forms.ComboBox analyteBox;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox diluentBox;
+        private System.Windows.Forms.TrackBar analyteBar;
+        private System.Windows.Forms.TrackBar diluentBar;
+        private System.Windows.Forms.Button Heat_But;
+        private System.Windows.Forms.TextBox ambtempBox;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label heaterIndicator;
     }
 }
 

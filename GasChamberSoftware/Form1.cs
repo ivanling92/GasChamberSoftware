@@ -8,31 +8,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Ports;
 
 namespace GasChamberSoftware
 {
     public partial class MainForm : Form
     {
-        bool LED_ON = false;
         bool smuDone = false;
         bool nanoDone = false;
+        bool nanoConnected = false;
         string nano_output;
-        string smu_output;
-        string iv_curve;
         List <string> logFile = new List<string>();
         int logCount=0;
+        Timer updateTimer = new Timer();
+        int junkCount = 3; //remove first few data
+
+        string[] ports;
         public MainForm()
         {
             InitializeComponent();
-            Timer updateTimer = new Timer();
             updateTimer.Tick += UpdateTimer_Tick;
-            updateTimer.Interval = 1;
-            updateTimer.Start();
+            updateTimer.Interval = 1000;
+            try
+            {
+                ports = SerialPort.GetPortNames();
+                nano_portname.Items.Clear();
+                nano_portname.Items.AddRange(ports);
+                analyteBox.SelectedIndex = 0;
+                diluentBox.SelectedIndex = 0;
+                nano_portname.SelectedIndex = nano_portname.Items.Count - 1;
+            }
+            catch (Exception err)
+            {
+
+            }
+
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
         {
-            if(realTime.Checked && !recordBox.Checked)
+            if (!recordBox.Checked)
             {
                 displayNoLog();
             }
@@ -41,89 +56,70 @@ namespace GasChamberSoftware
                 updateDisplay();
             }
             pressureChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_pressure.Checked;
-            hiCurrentChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_resistance.Checked;
-            lowCurrentChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_resistance.Checked;
             temperatureChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_temp.Checked;
             humidityChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_humidity.Checked;
+            no2Chart.ChartAreas[0].AxisY.IsStartedFromZero = fz_NO2.Checked; //UPDATE HERE
+            coChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_CO.Checked;
+            nh3Chart.ChartAreas[0].AxisY.IsStartedFromZero = fz_NH3.Checked;
+            h2Chart.ChartAreas[0].AxisY.IsStartedFromZero = fz_h2.Checked;
         }
 
-        private void displayNoLog()
+        private void displayNoLog() //UPDATE WHEN ALL DONE
         {
-            string[] outputs = new string[] { }; ;
-            if (smuDone && nanoDone)
-            {
-                try
-                {
-                    outputs = nano_output.Split(',');
-                }
-                catch (Exception err)
-                {
-                    nano_output = "0,0,0,0";
-                    outputs = nano_output.Split(',');
-                }
-                pressureBox.Text = outputs[0];
-                tempBox.Text = outputs[1];
-                humidBox.Text = outputs[2];
-                if (LED_ON)
-                {
-                    ledBox.Text = "1";
-                }
-                else
-                {
-                    ledBox.Text = "0";
-                }
-                resistBox.Text = smu_output;
-                smuDone = false;
-                nanoDone = false;
-                readAllButt.Enabled = true;
-                DateTime curDT = DateTime.Now;
-                string[] ivPoints = iv_curve.Split(';');
-                string lowCurrent = ivPoints[0].Split(',')[1];
-                string hiCurrent = ivPoints[ivPoints.Count()-2].Split(',')[1];
-                updateChart(iv_curve, pressureBox.Text, tempBox.Text, humidBox.Text, hiCurrent, lowCurrent, curDT.ToLongTimeString());
-                object sender = null;
-                EventArgs e = null;
-                readAll_click(sender, e);
-            }
+            //to be updated after finalized
         }
 
         private void updateDisplay()
         {
             string[] outputs = new string[] { }; ;
-            if(smuDone && nanoDone)
+            if(nanoDone)
             {
+                if(junkCount > 0)
+                {
+                    statusLogBox.AppendText("Initializing.... " + junkCount + "\n");
+                    junkCount -= 1;
+                    if(junkCount == 0)
+                        statusLogBox.AppendText("Success! Reading started!\n");
+                    return;
+                }
+
+
                 try
                 {
                     outputs = nano_output.Split(',');
                 }
                 catch (Exception err)
                 {
-                    nano_output = "0,0,0,0";
+                    nano_output = "0,0,0,0,0,0,0,0,0";
                     outputs = nano_output.Split(',');
                 }
-                pressureBox.Text = outputs[0];
-                tempBox.Text = outputs[1];
-                humidBox.Text = outputs[2];
-                if (LED_ON)
+                pressureBox.Text = outputs[6]; //update here
+                tempBox.Text = outputs[4];
+                humidBox.Text = outputs[5];
+                ambtempBox.Text = outputs[7];
+                no2Box.Text = outputs[0];
+                coBox.Text = outputs[1];
+                nh3Box.Text = outputs[2];
+                h2Box.Text = outputs[3];
+                string heaterOn = outputs[8];
+                heaterOn = heaterOn.Substring(0,1);
+                if(heaterOn == "1")
                 {
-                    ledBox.Text = "1";
+                    Heat_But.Text = "Stop Heating";
+                    isHeating = true;
+                    heaterIndicator.Text = "HEATER ON";
+                    heaterIndicator.ForeColor = Color.Red;
                 }
                 else
                 {
-                    ledBox.Text = "0";
+                    Heat_But.Text = "Start Heating";
+                    isHeating = false;
+                    heaterIndicator.Text = "HEATER OFF";
+                    heaterIndicator.ForeColor = Color.MidnightBlue;
                 }
-                resistBox.Text = smu_output;
                 smuDone = false;
                 nanoDone = false;
-                readAllButt.Enabled = true;
-                if(autoRead.Enabled == false && Convert.ToInt16(autoCount.Text)>0 && !recordBox.Checked)
-                {
-                    autoCount.Text = (Convert.ToInt16(autoCount.Text) - 1).ToString();
-                    object sender = null;
-                    EventArgs e = null;
-                    readAll_click(sender,e);
-                }
-                else if(recordBox.Checked)
+                if(recordBox.Checked)
                 {
                     object sender = null;
                     EventArgs e = null;
@@ -134,38 +130,21 @@ namespace GasChamberSoftware
                     autoRead.Enabled = true;
                 }
                 DateTime curDT = DateTime.Now;
-                //Quickfix - plotted the current instead of resistance to solve the resistance problem
-                string[] ivPoints = iv_curve.Split(';');
-                string lowCurrent = ivPoints[0].Split(',')[1];
-                string hiCurrent = ivPoints[ivPoints.Count()-2].Split(',')[1];
-                //end of quickfix
-                updateChart(iv_curve, pressureBox.Text, tempBox.Text, humidBox.Text, hiCurrent,lowCurrent, curDT.ToLongTimeString());
-                logFile.Add(curDT.ToString()+","+pressureBox.Text + "," + tempBox.Text + "," + humidBox.Text + "," + ledBox.Text + "," + resistBox.Text + "," + hiCurrent + "," +lowCurrent + "," + startVolt.Text + "," + endVolt.Text + "," + intVolt.Text);
+                updateChart(pressureBox.Text, tempBox.Text, humidBox.Text, no2Box.Text, coBox.Text, nh3Box.Text, h2Box.Text, curDT.ToLongTimeString()); //UPDATE HERE
+                //Creates a CSV string. to add stuff, just add to the CSV string
+                string csvStrings = no2Box.Text + "," + coBox.Text + "," + nh3Box.Text + "," + h2Box.Text + "," + tempBox.Text + "," + humidBox.Text + "," + pressureBox.Text + "," + ambtempBox.Text+","+heaterOn;
+                logFile.Add((curDT.ToLongTimeString() + "," + csvStrings).Replace(System.Environment.NewLine, null));//UPDATE HERE
                 logCount++;
                 memCount.Text = logCount.ToString();
+                using (var writer = new StreamWriter("EmergencyLog.csv",true))
+                {
+                    writer.WriteLine((curDT.ToShortDateString()+","+curDT.ToLongTimeString() + ","  + csvStrings).Replace(System.Environment.NewLine, null)); //UPDATE HERE
+                }
             }
         }
 
-        private void updateChart(string iv_curve, string pressure, string temperature, string humidity, string currentHi, string currentLow, string datetime)
+        private void updateChart(string pressure, string temperature, string humidity, string no2, string co, string nh3, string h2, string datetime)//UPDATE HERE
         {
-            string[] ivPoints = iv_curve.Split(';');
-            ivChart.Series["Series1"].Points.Clear();
-            ivChart.ChartAreas[0].AxisX.Title = "Voltage";
-            ivChart.ChartAreas[0].AxisY.Title = "Current";
-            foreach (string ivpoint in ivPoints)
-            {
-                //Console.WriteLine(ivpoint);
-                try
-                {
-                    string xpoint = ivpoint.Split(',')[0];
-                    string ypoint = ivpoint.Split(',')[1];
-                    ivChart.Series["Series1"].Points.AddXY(xpoint, ypoint);
-                }
-                catch(Exception err)
-                {
-                    Console.WriteLine(err.Message);
-                }
-            }
             try
             {
                 pressureChart.ChartAreas[0].AxisY.Title = "Pressure (hPa)";
@@ -174,10 +153,14 @@ namespace GasChamberSoftware
                 temperatureChart.Series["Series1"].Points.AddXY(datetime, temperature);
                 humidityChart.ChartAreas[0].AxisY.Title = "Humidity (%RH)";
                 humidityChart.Series["Series1"].Points.AddXY(datetime, humidity);
-                hiCurrentChart.ChartAreas[0].AxisY.Title = "Current at high bias (A)";
-                hiCurrentChart.Series["Series1"].Points.AddXY(datetime, currentHi);
-                lowCurrentChart.ChartAreas[0].AxisY.Title = "Current at low bias (A)";
-                lowCurrentChart.Series["Series1"].Points.AddXY(datetime, currentLow);
+                no2Chart.ChartAreas[0].AxisY.Title = "NO2 (PPM)";//UPDATE HERE
+                no2Chart.Series["Series1"].Points.AddXY(datetime, no2);
+                coChart.ChartAreas[0].AxisY.Title = "CO (PPM)";
+                coChart.Series["Series1"].Points.AddXY(datetime, co);
+                nh3Chart.ChartAreas[0].AxisY.Title = "NH3 (PPM)";
+                nh3Chart.Series["Series1"].Points.AddXY(datetime, nh3);
+                h2Chart.ChartAreas[0].AxisY.Title = "H2 (PPM)";
+                h2Chart.Series["Series1"].Points.AddXY(datetime, h2);
 
                 if (scroll_pressure.Checked)
                 {
@@ -190,26 +173,6 @@ namespace GasChamberSoftware
                     }       
                 }
 
-                if (scroll_resist.Checked)
-                {
-                    hiCurrentChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-                    hiCurrentChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
-                    hiCurrentChart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
-                    if (hiCurrentChart.ChartAreas[0].AxisX.Maximum > hiCurrentChart.ChartAreas[0].AxisX.ScaleView.Size)
-                    {
-                        hiCurrentChart.ChartAreas[0].AxisX.ScaleView.Scroll(hiCurrentChart.ChartAreas[0].AxisX.Maximum);
-                    }
-
-                    lowCurrentChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
-                    lowCurrentChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
-                    lowCurrentChart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
-                    if (lowCurrentChart.ChartAreas[0].AxisX.Maximum > lowCurrentChart.ChartAreas[0].AxisX.ScaleView.Size)
-                    {
-                        lowCurrentChart.ChartAreas[0].AxisX.ScaleView.Scroll(lowCurrentChart.ChartAreas[0].AxisX.Maximum);
-                    }
-
-
-                }
 
                 if (scroll_temp.Checked)
                 {
@@ -234,63 +197,126 @@ namespace GasChamberSoftware
                 }
 
 
+                if (scrollNO2.Checked)  //UPDATE HERE
+                {
+                    no2Chart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                    no2Chart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
+                    no2Chart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
+                    if (no2Chart.ChartAreas[0].AxisX.Maximum > no2Chart.ChartAreas[0].AxisX.ScaleView.Size)
+                    {
+                        no2Chart.ChartAreas[0].AxisX.ScaleView.Scroll(no2Chart.ChartAreas[0].AxisX.Maximum);
+                    }
+                }
+
+                if (scroll_co.Checked)  //UPDATE HERE
+                {
+                    coChart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                    coChart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
+                    coChart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
+                    if (coChart.ChartAreas[0].AxisX.Maximum > coChart.ChartAreas[0].AxisX.ScaleView.Size)
+                    {
+                        coChart.ChartAreas[0].AxisX.ScaleView.Scroll(no2Chart.ChartAreas[0].AxisX.Maximum);
+                    }
+                }
+
+                if (scroll_nh3.Checked)  //UPDATE HERE
+                {
+                    nh3Chart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                    nh3Chart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
+                    nh3Chart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
+                    if (nh3Chart.ChartAreas[0].AxisX.Maximum > nh3Chart.ChartAreas[0].AxisX.ScaleView.Size)
+                    {
+                        nh3Chart.ChartAreas[0].AxisX.ScaleView.Scroll(no2Chart.ChartAreas[0].AxisX.Maximum);
+                    }
+                }
+
+                if (scroll_h2.Checked)  //UPDATE HERE
+                {
+                    h2Chart.ChartAreas[0].AxisX.ScrollBar.Enabled = true;
+                    h2Chart.ChartAreas[0].AxisX.IsLabelAutoFit = true;
+                    h2Chart.ChartAreas[0].AxisX.ScaleView.Size = Convert.ToInt32(zoomFactor.Value);
+                    if (h2Chart.ChartAreas[0].AxisX.Maximum > h2Chart.ChartAreas[0].AxisX.ScaleView.Size)
+                    {
+                        h2Chart.ChartAreas[0].AxisX.ScaleView.Scroll(no2Chart.ChartAreas[0].AxisX.Maximum);
+                    }
+                }
+
+
             }
             catch { }
         }
 
+        
         private void nano_connect_Click(object sender, EventArgs e)
         {
-            serialPort_nano.Open();
-            LEDswitch.Enabled = true;
-            smu_connect.Enabled = true;
-            nano_connect.Enabled = false;
-        }
-
-        private void smu_connect_Click(object sender, EventArgs e)
-        {
-            serialPort_smu.Open();
-            readAllButt.Enabled = true;
-            autoRead.Enabled = true;
-            smu_connect.Enabled = false;
-            realTime.Enabled = true;
-            realTime.Checked = true;
-            recordBox.Enabled = true;
-        }
-
-        private void serialPort_smu_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
-        {
-            try
+            if(analyteBox.SelectedItem == null || diluentBox.SelectedItem == null)
             {
-                iv_curve = serialPort_smu.ReadLine();
-                smu_output = serialPort_smu.ReadLine();
-                smuDone = true;
+                statusLogBox.AppendText("Please select the analyte and diluent first!\n");
+                return;
             }
-            catch
-            { }
-
+            if (nanoConnected) //Disconnect is clicked
+            {
+                statusLogBox.AppendText("Disconnecting...\n");
+                try
+                {
+                    serialPort_nano.Close();
+                    nano_connect.Text = "Connect";
+                    ConnectLabel.Text = "Nano Port";
+                    nanoConnected = false;
+                    updateTimer.Stop();
+                    autoRead.Enabled = false; //Disable both start and stop button
+                    stopButt.Enabled = false;
+                    statusLogBox.AppendText("Success! \n");
+                }
+                catch (Exception err)
+                {
+                    //ConnectLabel.Text = err.Message;
+                    statusLogBox.AppendText("Error!\n");
+                    statusLogBox.AppendText(err.Message+"\n");
+                }
+            }
+            else //Connect is clicked
+            {
+                statusLogBox.AppendText("Attempt to connect...\n");
+                try
+                {
+                    serialPort_nano.PortName = nano_portname.Items[nano_portname.SelectedIndex].ToString();
+                    serialPort_nano.Open();
+                    nano_connect.Text = "Disconnect";
+                    ConnectLabel.Text = "Nano Port";
+                    nanoConnected = true;
+                    updateTimer.Start();
+                    autoRead.Enabled = false; //Disable both start button
+                    stopButt.Enabled = true;
+                    statusLogBox.AppendText("Success! \n");
+                    statusLogBox.AppendText("Connected to " + serialPort_nano.PortName + "\n");
+                }
+                catch (Exception err)
+                {
+                    //ConnectLabel.Text = err.Message;
+                    statusLogBox.AppendText("Error!\n");
+                    statusLogBox.AppendText(err.Message + "\n");
+                }
+            }
+            
             
         }
+
 
         private void serialPort_nano_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             nanoDone = true;
-            nano_output = serialPort_nano.ReadLine();
-        }
-
-        private void LEDswitch_Click(object sender, EventArgs e)
-        {
-            if(!LED_ON)
+            try
             {
-                serialPort_nano.WriteLine("UV_ON");
-                LED_ON = true;
+                nano_output = serialPort_nano.ReadLine();
             }
-            else
+            catch (Exception err)
             {
-                serialPort_nano.WriteLine("UV_OFF");
-                LED_ON = false;
+
             }
             
         }
+
 
         private void readAll_click(object sender, EventArgs e)
         {
@@ -298,23 +324,14 @@ namespace GasChamberSoftware
             clearButt.Enabled = true;
             smuDone = false;
             nanoDone = false;
-            readAllButt.Enabled = false;
-            serialPort_nano.WriteLine("STAT");
-            if(startVolt.Text != endVolt.Text && Convert.ToDouble(intVolt.Text) != 0 && Convert.ToDouble(endVolt.Text) - Convert.ToDouble(startVolt.Text) >= Convert.ToDouble(intVolt.Text))
-            {
-                serialPort_smu.WriteLine("start(" + startVolt.Text + "," + endVolt.Text + "," + intVolt.Text + ")");
-            }
-            else
-            {
-                serialPort_smu.WriteLine("start(1,3,0.5)");
-            }
         }
 
         private void autoRead_Click(object sender, EventArgs e)
         {
-            autoRead.Enabled = false;
             stopButt.Enabled = true;
-            readAll_click(sender, e);
+            autoRead.Enabled = false;
+            updateTimer.Interval = Convert.ToInt32(intVolt.Text)*1000;
+            updateTimer.Start();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -347,7 +364,7 @@ namespace GasChamberSoftware
         {
             using (var writer = new StreamWriter(saveFileDialog1.FileName))
             {
-                writer.WriteLine("TimeStamp,Pressure,Temperature,Humidity,LEDStatus,Resistance,HiCurrent,LowCurrent,Vstart,Vend,Vint");
+                writer.WriteLine("TimeStamp,NO2,NH3,CO,H2,Temperature,Humidity,Pressure,AmbientTemp,HeaterOn");
                 foreach (string loggedline in logFile)
                 {
                     writer.WriteLine(loggedline);
@@ -357,34 +374,28 @@ namespace GasChamberSoftware
 
         private void stopButt_Click(object sender, EventArgs e)
         {
-            autoCount.Text = "0";
-            realTime.Checked = false;
-        }
-
-        private void realTime_CheckedChanged(object sender, EventArgs e)
-        {
-            if(realTime.Checked)
+            try
             {
-                stopButt.Enabled = true;
-                autoRead.Enabled = false;
-                readAll_click(sender, e);
-            }
-            else
-            {
-                stopButt.Enabled = false;
+                updateTimer.Stop();
                 autoRead.Enabled = true;
             }
-
+            catch(Exception err)
+            {
+                Console.WriteLine(err.Message);
+            }
+            
         }
+
 
         private void ResetChart_Click(object sender, EventArgs e)
         {
-            ivChart.Series["Series1"].Points.Clear();
             pressureChart.Series["Series1"].Points.Clear();
             temperatureChart.Series["Series1"].Points.Clear();
             humidityChart.Series["Series1"].Points.Clear();
-            hiCurrentChart.Series["Series1"].Points.Clear();
-            lowCurrentChart.Series["Series1"].Points.Clear();
+            no2Chart.Series["Series1"].Points.Clear();
+            h2Chart.Series["Series1"].Points.Clear();
+            coChart.Series["Series1"].Points.Clear();
+            nh3Chart.Series["Series1"].Points.Clear();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -407,10 +418,6 @@ namespace GasChamberSoftware
             humidityChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_humidity.Checked;
         }
 
-        private void fz_resistance_CheckedChanged(object sender, EventArgs e)
-        {
-            hiCurrentChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_resistance.Checked;
-        }
 
         private void scroll_pressure_CheckedChanged(object sender, EventArgs e)
         {
@@ -422,18 +429,6 @@ namespace GasChamberSoftware
             }
         }
 
-        private void scroll_resist_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!scroll_resist.Checked)
-            {
-                hiCurrentChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
-                hiCurrentChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
-                hiCurrentChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
-                lowCurrentChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
-                lowCurrentChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
-                lowCurrentChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
-            }
-        }
 
         private void scroll_temp_CheckedChanged(object sender, EventArgs e)
         {
@@ -452,6 +447,129 @@ namespace GasChamberSoftware
                 humidityChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
                 humidityChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
                 humidityChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+            }
+        }
+
+        private void scroll_co_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!scroll_co.Checked)
+            {
+                coChart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+                coChart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
+                coChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+            }
+        }
+
+        private void fz_NO2_CheckedChanged(object sender, EventArgs e)
+        {
+            no2Chart.ChartAreas[0].AxisY.IsStartedFromZero = fz_NO2.Checked;
+        }
+
+        private void fz_CO_CheckedChanged(object sender, EventArgs e)
+        {
+            coChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_CO.Checked;
+        }
+
+        private void nano_portname_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // ConnectLabel.Text = nano_portname.Items[nano_portname.SelectedIndex].ToString(); //for debugging only
+            statusLogBox.Text += "COM port changed to " + nano_portname.Items[nano_portname.SelectedIndex].ToString() + " successfully!\n";
+        }
+
+        private void intVolt_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (autoRead.Enabled)
+            {
+
+            }
+            else //if start button is not enabled, means it's already running. Stop it.
+            {
+                autoRead.Enabled = true;
+                stopButt.Enabled = false;
+                updateTimer.Stop();
+            }
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+            //accidental added
+        }
+
+        private void scrollNO2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!scrollNO2.Checked)
+            {
+                no2Chart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+                no2Chart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
+                no2Chart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+            }
+        }
+
+        private void scroll_nh3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!scroll_nh3.Checked)
+            {
+                nh3Chart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+                nh3Chart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
+                nh3Chart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+            }
+        }
+
+
+
+        private void scroll_h2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!scroll_h2.Checked)
+            {
+                h2Chart.ChartAreas[0].AxisX.ScrollBar.Enabled = false;
+                h2Chart.ChartAreas[0].AxisX.IsLabelAutoFit = false;
+                h2Chart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+            }
+        }
+
+
+        private void analyteBar_Scroll(object sender, EventArgs e)
+        {
+            APWMBox.Text = analyteBar.Value.ToString();
+        }
+
+        private void diluentBar_Scroll(object sender, EventArgs e)
+        {
+            DPWMBox.Text = diluentBar.Value.ToString();
+        }
+
+        private void statusLogBox_TextChanged(object sender, EventArgs e)
+        {
+            statusLogBox.SelectionStart = statusLogBox.Text.Length;
+            statusLogBox.ScrollToCaret();
+        }
+
+        bool isHeating = false;
+
+        private void Heat_But_Click(object sender, EventArgs e)
+        {
+            if(isHeating)//if already heating, turn it off
+            {
+                try
+                {
+                    serialPort_nano.Write("H_L");
+                }
+                catch
+                {
+                    statusLogBox.AppendText("Error writing to Arduino!\n");
+                }
+            }
+            else//if not heating turn it on
+            {
+                try
+                {
+                    serialPort_nano.Write("H_H");
+                }
+                catch
+                {
+                    statusLogBox.AppendText("Error writing to Arduino!\n");
+                }
+                
             }
         }
     }
