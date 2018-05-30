@@ -133,6 +133,14 @@
             this.ambtempBox = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.heaterIndicator = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.TempController = new System.Windows.Forms.CheckBox();
+            this.tempSetpointBox = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.manualCommandBox = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.CommandBut = new System.Windows.Forms.Button();
+            this.RawOutput = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pressureChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.temperatureChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.humidityChart)).BeginInit();
@@ -163,7 +171,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(31, 74);
+            this.label2.Location = new System.Drawing.Point(31, 77);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(84, 13);
             this.label2.TabIndex = 1;
@@ -171,35 +179,39 @@
             // 
             // pressureBox
             // 
-            this.pressureBox.Location = new System.Drawing.Point(132, 43);
+            this.pressureBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pressureBox.Location = new System.Drawing.Point(132, 28);
             this.pressureBox.Name = "pressureBox";
             this.pressureBox.ReadOnly = true;
-            this.pressureBox.Size = new System.Drawing.Size(100, 20);
+            this.pressureBox.Size = new System.Drawing.Size(149, 38);
             this.pressureBox.TabIndex = 2;
             this.pressureBox.Text = "0";
             // 
             // tempBox
             // 
-            this.tempBox.Location = new System.Drawing.Point(132, 71);
+            this.tempBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tempBox.ForeColor = System.Drawing.Color.Maroon;
+            this.tempBox.Location = new System.Drawing.Point(132, 72);
             this.tempBox.Name = "tempBox";
             this.tempBox.ReadOnly = true;
-            this.tempBox.Size = new System.Drawing.Size(100, 20);
+            this.tempBox.Size = new System.Drawing.Size(100, 29);
             this.tempBox.TabIndex = 3;
             this.tempBox.Text = "0";
             // 
             // humidBox
             // 
-            this.humidBox.Location = new System.Drawing.Point(132, 102);
+            this.humidBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.humidBox.Location = new System.Drawing.Point(132, 101);
             this.humidBox.Name = "humidBox";
             this.humidBox.ReadOnly = true;
-            this.humidBox.Size = new System.Drawing.Size(100, 20);
+            this.humidBox.Size = new System.Drawing.Size(100, 29);
             this.humidBox.TabIndex = 5;
             this.humidBox.Text = "0";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(31, 105);
+            this.label3.Location = new System.Drawing.Point(31, 109);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 13);
             this.label3.TabIndex = 4;
@@ -590,10 +602,11 @@
             // 
             // no2Box
             // 
-            this.no2Box.Location = new System.Drawing.Point(388, 132);
+            this.no2Box.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.no2Box.Location = new System.Drawing.Point(388, 131);
             this.no2Box.Name = "no2Box";
             this.no2Box.ReadOnly = true;
-            this.no2Box.Size = new System.Drawing.Size(100, 20);
+            this.no2Box.Size = new System.Drawing.Size(100, 29);
             this.no2Box.TabIndex = 57;
             this.no2Box.Text = "0";
             // 
@@ -608,10 +621,11 @@
             // 
             // h2Box
             // 
+            this.h2Box.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.h2Box.Location = new System.Drawing.Point(388, 102);
             this.h2Box.Name = "h2Box";
             this.h2Box.ReadOnly = true;
-            this.h2Box.Size = new System.Drawing.Size(100, 20);
+            this.h2Box.Size = new System.Drawing.Size(100, 29);
             this.h2Box.TabIndex = 63;
             this.h2Box.Text = "0";
             // 
@@ -626,19 +640,21 @@
             // 
             // nh3Box
             // 
+            this.nh3Box.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nh3Box.Location = new System.Drawing.Point(388, 71);
             this.nh3Box.Name = "nh3Box";
             this.nh3Box.ReadOnly = true;
-            this.nh3Box.Size = new System.Drawing.Size(100, 20);
+            this.nh3Box.Size = new System.Drawing.Size(100, 29);
             this.nh3Box.TabIndex = 61;
             this.nh3Box.Text = "0";
             // 
             // coBox
             // 
+            this.coBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.coBox.Location = new System.Drawing.Point(388, 43);
             this.coBox.Name = "coBox";
             this.coBox.ReadOnly = true;
-            this.coBox.Size = new System.Drawing.Size(100, 20);
+            this.coBox.Size = new System.Drawing.Size(100, 29);
             this.coBox.TabIndex = 60;
             this.coBox.Text = "0";
             // 
@@ -1003,17 +1019,18 @@
             // 
             // ambtempBox
             // 
-            this.ambtempBox.Location = new System.Drawing.Point(132, 137);
+            this.ambtempBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ambtempBox.Location = new System.Drawing.Point(132, 130);
             this.ambtempBox.Name = "ambtempBox";
             this.ambtempBox.ReadOnly = true;
-            this.ambtempBox.Size = new System.Drawing.Size(100, 20);
+            this.ambtempBox.Size = new System.Drawing.Size(100, 29);
             this.ambtempBox.TabIndex = 95;
             this.ambtempBox.Text = "0";
             // 
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(31, 140);
+            this.label22.Location = new System.Drawing.Point(31, 138);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(90, 13);
             this.label22.TabIndex = 94;
@@ -1029,11 +1046,93 @@
             this.heaterIndicator.TabIndex = 96;
             this.heaterIndicator.Text = "HEATER OFF";
             // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(1142, 446);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(60, 13);
+            this.label23.TabIndex = 97;
+            this.label23.Text = "Automation";
+            // 
+            // TempController
+            // 
+            this.TempController.AutoSize = true;
+            this.TempController.Location = new System.Drawing.Point(1145, 475);
+            this.TempController.Name = "TempController";
+            this.TempController.Size = new System.Drawing.Size(111, 17);
+            this.TempController.TabIndex = 98;
+            this.TempController.Text = "Maintain Temp at:";
+            this.TempController.UseVisualStyleBackColor = true;
+            this.TempController.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
+            // 
+            // tempSetpointBox
+            // 
+            this.tempSetpointBox.Location = new System.Drawing.Point(1256, 473);
+            this.tempSetpointBox.Name = "tempSetpointBox";
+            this.tempSetpointBox.Size = new System.Drawing.Size(47, 20);
+            this.tempSetpointBox.TabIndex = 99;
+            this.tempSetpointBox.Text = "20";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(1305, 476);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(14, 13);
+            this.label24.TabIndex = 97;
+            this.label24.Text = "C";
+            // 
+            // manualCommandBox
+            // 
+            this.manualCommandBox.Location = new System.Drawing.Point(1151, 526);
+            this.manualCommandBox.Name = "manualCommandBox";
+            this.manualCommandBox.Size = new System.Drawing.Size(328, 20);
+            this.manualCommandBox.TabIndex = 100;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(1148, 510);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(92, 13);
+            this.label25.TabIndex = 101;
+            this.label25.Text = "Manual Command";
+            // 
+            // CommandBut
+            // 
+            this.CommandBut.Location = new System.Drawing.Point(1151, 553);
+            this.CommandBut.Name = "CommandBut";
+            this.CommandBut.Size = new System.Drawing.Size(75, 23);
+            this.CommandBut.TabIndex = 102;
+            this.CommandBut.Text = "Send";
+            this.CommandBut.UseVisualStyleBackColor = true;
+            this.CommandBut.Click += new System.EventHandler(this.CommandBut_Click);
+            // 
+            // RawOutput
+            // 
+            this.RawOutput.AutoSize = true;
+            this.RawOutput.Location = new System.Drawing.Point(1241, 558);
+            this.RawOutput.Name = "RawOutput";
+            this.RawOutput.Size = new System.Drawing.Size(83, 17);
+            this.RawOutput.TabIndex = 103;
+            this.RawOutput.Text = "Raw Output";
+            this.RawOutput.UseVisualStyleBackColor = true;
+            this.RawOutput.CheckedChanged += new System.EventHandler(this.RawOutput_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1492, 1045);
+            this.Controls.Add(this.RawOutput);
+            this.Controls.Add(this.CommandBut);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.manualCommandBox);
+            this.Controls.Add(this.tempSetpointBox);
+            this.Controls.Add(this.TempController);
+            this.Controls.Add(this.label24);
+            this.Controls.Add(this.label23);
             this.Controls.Add(this.heaterIndicator);
             this.Controls.Add(this.ambtempBox);
             this.Controls.Add(this.label22);
@@ -1216,6 +1315,14 @@
         private System.Windows.Forms.TextBox ambtempBox;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label heaterIndicator;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.CheckBox TempController;
+        private System.Windows.Forms.TextBox tempSetpointBox;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox manualCommandBox;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button CommandBut;
+        private System.Windows.Forms.CheckBox RawOutput;
     }
 }
 

@@ -28,7 +28,8 @@ namespace GasChamberSoftware
         {
             InitializeComponent();
             updateTimer.Tick += UpdateTimer_Tick;
-            updateTimer.Interval = 1000;
+            updateTimer.Interval = 100;
+            nano_connect.Focus();
             try
             {
                 ports = SerialPort.GetPortNames();
@@ -42,7 +43,7 @@ namespace GasChamberSoftware
             {
 
             }
-
+            
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
@@ -55,6 +56,7 @@ namespace GasChamberSoftware
             {
                 updateDisplay();
             }
+
             pressureChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_pressure.Checked;
             temperatureChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_temp.Checked;
             humidityChart.ChartAreas[0].AxisY.IsStartedFromZero = fz_humidity.Checked;
@@ -87,22 +89,36 @@ namespace GasChamberSoftware
                 try
                 {
                     outputs = nano_output.Split(',');
+                    if(RawOutput.Checked)
+                    {
+                        statusLogBox.AppendText(nano_output);
+                    }
                 }
                 catch (Exception err)
                 {
                     nano_output = "0,0,0,0,0,0,0,0,0";
                     outputs = nano_output.Split(',');
                 }
-                pressureBox.Text = outputs[6]; //update here
-                tempBox.Text = outputs[4];
-                humidBox.Text = outputs[5];
-                ambtempBox.Text = outputs[7];
-                no2Box.Text = outputs[0];
-                coBox.Text = outputs[1];
-                nh3Box.Text = outputs[2];
-                h2Box.Text = outputs[3];
-                string heaterOn = outputs[8];
-                heaterOn = heaterOn.Substring(0,1);
+                string heaterOn;
+                try
+                {
+                    pressureBox.Text = outputs[6]; //update here
+                    tempBox.Text = outputs[4];
+                    humidBox.Text = outputs[5];
+                    ambtempBox.Text = outputs[7];
+                    no2Box.Text = outputs[0];
+                    coBox.Text = outputs[1];
+                    nh3Box.Text = outputs[2];
+                    h2Box.Text = outputs[3];
+                    heaterOn = outputs[8];
+                    heaterOn = heaterOn.Substring(0, 1);
+                }
+                catch
+                {
+                    return;
+                    statusLogBox.AppendText("Invalid frame\n");
+                }
+
                 if(heaterOn == "1")
                 {
                     Heat_But.Text = "Stop Heating";
@@ -570,6 +586,59 @@ namespace GasChamberSoftware
                     statusLogBox.AppendText("Error writing to Arduino!\n");
                 }
                 
+            }
+        }
+        int tempSetpoint = 20;
+        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
+        {
+            tempSetpoint = Convert.ToInt16(tempSetpointBox.Text);
+            statusLogBox.AppendText("Setpoint is: "+tempSetpoint.ToString()+"\n");
+            if(TempController.Checked)
+            {
+                Heat_But.Enabled = false;
+                tempSetpointBox.Enabled = false;
+                try
+                {
+                    serialPort_nano.Write("H_S");
+                    serialPort_nano.Write(tempSetpointBox.Text);
+                }
+                catch
+                {
+                    statusLogBox.AppendText("Error writing to Arduino!\n");
+                }
+
+            }
+            else
+            {
+                Heat_But.Enabled = true;
+                tempSetpointBox.Enabled = true;
+                try
+                {
+                    serialPort_nano.Write("H_S");
+                    serialPort_nano.Write("0");
+                }
+                catch
+                {
+                    statusLogBox.AppendText("Error writing to Arduino!\n");
+                }
+            }
+        }
+
+        private void RawOutput_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CommandBut_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                serialPort_nano.Write(manualCommandBox.Text);
+                manualCommandBox.Text = "";
+            }
+            catch
+            {
+                statusLogBox.AppendText("Error writing to Arduino!\n");
             }
         }
     }
